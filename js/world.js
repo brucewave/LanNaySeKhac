@@ -121,9 +121,16 @@ G.world = { mode: 'walk', camX: 0, camY: 0, ents: {}, near: null, solids: [] };
   };
 
   // Camera bám sát nhân vật: phóng cảnh lên W.zoom lần, camX/camY là toạ độ thế giới ở góc trên trái khung nhìn
+  // màn dọc: phóng cảnh cho phủ kín chiều cao màn hình (không còn dải đen), cần điều khiển nổi trên cảnh
+  G.DECK = 0;
+  W.baseZoom = function () {
+    if (!G.portrait) return 1.25;
+    var L = G.S && G.LOCATIONS[G.S.loc];
+    return Math.max(1, G.VIEW_H / ((L && L.height) || 790));
+  };
   W.zoom = 1.25;
   W.viewW = function () { return G.VIEW_W / W.zoom; };
-  W.viewH = function () { return G.VIEW_H / W.zoom; };
+  W.viewH = function () { return (G.VIEW_H - (G.portrait ? G.DECK : 0)) / W.zoom; };
   W.updateCamera = function (snap, tx, ty) {
     var L = G.LOCATIONS[G.S.loc], vw = W.viewW(), vh = W.viewH();
     var cx = (tx !== undefined ? tx : G.S.x) - vw / 2;
@@ -367,11 +374,12 @@ G.world = { mode: 'walk', camX: 0, camY: 0, ents: {}, near: null, solids: [] };
   W.tint = function () {
     var m = G.S.min, a, c;
     $('stage').classList.toggle('past', !!G.S.era);
-    if (G.S.era) { $('tint').style.background = 'rgba(40,22,8,.32)'; $('stage').classList.add('night'); return; }
+    if (G.S.era) { if ($('tint')._bg !== 'era') { $('tint')._bg = 'era'; $('tint').style.background = 'rgba(40,22,8,.32)'; } $('stage').classList.add('night'); return; }
     if (m < 9 * 60) { c = '111,134,160'; a = 0.10 * (1 - (m - 360) / 180); }
     else if (m < 16 * 60) { c = '0,0,0'; a = 0; }
     else { c = '4,7,12'; a = Math.min(0.5, (m - 960) / 300 * 0.5); }
-    $('tint').style.background = 'rgba(' + c + ',' + Math.max(0, a).toFixed(3) + ')';
+    var bg = 'rgba(' + c + ',' + Math.max(0, a).toFixed(3) + ')', tn = $('tint');
+    if (tn._bg !== bg) { tn._bg = bg; tn.style.background = bg; }
     $('stage').classList.toggle('night', m >= 17 * 60);
   };
 })();

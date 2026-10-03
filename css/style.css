@@ -749,3 +749,65 @@ body.hitflash #tint { background: rgba(200,30,40,.45) !important; }
 .dog.walking .dog-tail { transform-box: fill-box; transform-origin: 100% 100%; }
 .ent.pet.walk .dog.walking .dog-tail { animation: dogWag .18s ease-in-out infinite alternate; }
 @keyframes dogWag { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+
+/* ---------- đồ hoạ Mượt (điện thoại) ---------- */
+body.lite #world [filter], body.lite #title-art [filter] { filter: none; }
+body.lite #bg *, body.lite #fg *, body.lite .propw * { animation: none !important; }
+body.lite #amb .mist, body.lite #amb .leaf, body.lite #amb .moth, body.lite #amb .ray, body.lite #amb .fly:nth-child(odd) { display: none; }
+body.lite #amb .refl { filter: none; }
+body.lite #amb .amb-glow { mix-blend-mode: normal; opacity: calc(var(--night) * .55); }
+body.lite .hbtn, body.lite #title button { backdrop-filter: none; }
+body.lite .guard .chibi { filter: none; }
+body.lite #bg, body.lite #fg { contain: paint; }
+
+/* ---------- màn dọc (điện thoại cầm dọc): cảnh ở trên, bàn điều khiển ở dưới ---------- */
+#rotate { display: none !important; }
+#deck { display: none; }
+body.portrait #deck { display: none; position: absolute; left: 0; right: 0; bottom: 0; height: 290px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(11,15,20,0) 0, rgba(11,15,20,.92) 34px, #0B0F14 70px); }
+body.portrait #joyzone { top: auto; bottom: 0; height: 250px; width: 64%; }
+body.portrait #joy { left: 150px; top: calc(100% - 130px); opacity: .45; }
+body.portrait #joy.on { opacity: 1; }
+body.portrait #btn-act { bottom: 80px; right: 44px; min-width: 112px; height: 112px; border-radius: 56px; font-size: 18px; }
+body.portrait #title { padding-left: 0; align-items: center; justify-content: flex-start; padding-top: 170px; text-align: center; }
+body.portrait #title h1 { font-size: 70px; }
+body.portrait #title h1::after { margin-left: auto !important; margin-right: auto; background: linear-gradient(90deg, rgba(163,46,54,0), #A32E36, rgba(163,46,54,0)); }
+body.portrait #title p { max-width: 420px; }
+body.portrait #title button { width: 340px; height: 60px; font-size: 18px; }
+body.portrait #title .music-toggle { width: 340px; height: 46px; }
+/* màn dọc: nút HUD ở góc trên phải, thông tin ngày / giờ / tiền ở mép trên bàn điều khiển */
+body.portrait #hud { right: 8px; }
+body.portrait #hud .hud-info { position: fixed; left: 50%; transform: translateX(-50%); top: auto; bottom: 246px; }
+body.portrait #hud .hchip-loc { display: none; }
+body.portrait #hud .hchip { font-size: 15px; padding: 6px 12px; }
+body.portrait #dialog:not(.talk-bubble) { left: 8px; right: 8px; width: auto; transform: none; bottom: 8px; max-height: 276px; }
+body.portrait #dialog .txt { font-size: 19px; }
+body.portrait #dialog .choices button { padding: 10px 12px; font-size: 16px; }
+/* màn dọc: thanh bán hàng xếp 2 tầng trong bàn điều khiển */
+body.portrait #sellpanel { flex-wrap: wrap; left: 8px; right: 8px; bottom: 8px; gap: 8px; }
+body.portrait #sellpanel .sp-items { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); }
+body.portrait #sellpanel .sp-item { width: auto; min-height: 58px; }
+body.portrait #sellpanel .sp-mid { flex: 1 1 260px; }
+body.portrait #sellpanel .sp-side { width: 150px; }
+body.portrait #sellpanel .sp-side button { padding: 8px 10px; font-size: 13px; }
+body.portrait #sellpanel .sp-serve { padding: 10px 16px; }
+/* màn dọc: tranh cận cảnh và bảng lớn vừa bề ngang 540, bảng được cao hơn */
+body.portrait #closeup { width: 524px; height: 302px; top: 70px; }
+body.portrait .panel { max-width: 524px; max-height: calc(100% - 120px); }
+body.portrait .panel.big { width: 524px; }
+/* màn dọc: cảnh phim khung ngang ở giữa (cắt bớt hai mép), phụ đề ngay dưới khung */
+body.portrait #cut svg { inset: auto; left: 50%; top: 50%; width: 700px; height: 394px; margin: -197px 0 0 -350px; }
+body.portrait #cut .cut-bar.top { display: none; }
+body.portrait #cut .cut-bar.bot { bottom: auto; top: calc(50% + 197px); height: auto; padding: 18px 20px; text-align: center; background: none; }
+body.portrait #cut .cut-bar span { font-size: 20px; }
+body.portrait #cut .cut-skip { top: 24px; font-size: 14px; }
+body.busy #touch { display: none; }
+
+/* màn dọc không dải đen: cần điều khiển, nút và dòng thông tin nổi trên cảnh */
+body.portrait #joy { background: rgba(15,20,27,.35); }
+body.portrait #btn-act { opacity: .85; }
+body.portrait #hud .hud-info { bottom: 236px; }
+/* màn dọc: hộp thoại kể chuyện nằm giữa màn hình cho dễ đọc */
+body.portrait #dialog:not(.talk-bubble) { top: 50%; bottom: auto; transform: translateY(-50%); max-height: 60%; }
+/* màn dọc: bản đồ nhỏ, mục tiêu và nút HUD to hơn 10% cho dễ bấm */
+body.portrait #minimap, body.portrait #objective, body.portrait #hud > button { zoom: 1.1; }

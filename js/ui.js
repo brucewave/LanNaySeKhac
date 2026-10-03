@@ -36,18 +36,19 @@ G.ui = {};
     setTimeout(function () { t.remove(); }, (ms || 2600) + 400);
   };
 
+  function txt(id, v) { var el = $(id); v = String(v); if (el._t !== v) { el._t = v; el.textContent = v; } }
   G.ui.hud = function () {
     var S = G.S;
     if (S.era) {
-      $('hud-day').textContent = 'Năm 1996';
-      $('hud-time').textContent = 'Đêm mùng ' + ((G.NIGHT_DAY || {})[S.pnight] || 8) + '/8 · ' + G.fmtTime(S.pmin % 1440);
+      txt('hud-day', 'Năm 1996');
+      txt('hud-time', 'Đêm mùng ' + ((G.NIGHT_DAY || {})[S.pnight] || 8) + '/8 · ' + G.fmtTime(S.pmin % 1440));
     } else {
-      $('hud-day').textContent = 'Ngày ' + S.day;
-      $('hud-time').textContent = G.fmtTime(S.min) + ' · ' + G.slotOf(S.min).name;
+      txt('hud-day', 'Ngày ' + S.day);
+      txt('hud-time', G.fmtTime(S.min) + ' · ' + G.slotOf(S.min).name);
     }
-    $('hud-money').textContent = G.fmtMoney(S.money);
-    $('hud-loc').textContent = G.LOCATIONS[S.loc].name;
-    $('hud-cart').textContent = 'Xe: ' + G.stockTotal(S) + '/' + G.cartCap(S);
+    txt('hud-money', G.fmtMoney(S.money));
+    txt('hud-loc', G.LOCATIONS[S.loc].name);
+    txt('hud-cart', 'Xe: ' + G.stockTotal(S) + '/' + G.cartCap(S));
     $('hud-cart').hidden = !!S.era;
     var obj = null;
     for (var i = 0; i < G.OBJECTIVES.length; i++) {
@@ -60,7 +61,7 @@ G.ui = {};
       if (S.flags.lastObj) G.ui.toast('Xong mục tiêu. Mục tiêu mới!');
       S.flags.lastObj = obj.id;
     }
-    $('objective').textContent = obj ? (typeof obj.text === 'function' ? obj.text(S) : obj.text) : '';
+    txt('objective', obj ? (typeof obj.text === 'function' ? obj.text(S) : obj.text) : '');
     var nn = G.ui.newClues ? G.ui.newClues() : 0;
     $('note-badge').hidden = !nn; $('note-badge').textContent = nn;
   };

@@ -128,6 +128,7 @@ var G = window.G || (window.G = {});
   window.addEventListener('load', function () { btnNew.onclick = pickMode; }); // sau main.js
   // menu: đổi chế độ giữa chừng
   var menu0 = G.ui.menu;
+  G.TEST_PANEL = false;
   G.ui.menu = function () {
     menu0.apply(this, arguments);
     var list = document.querySelector('#menu .list'), S = G.S;
@@ -136,7 +137,7 @@ var G = window.G || (window.G = {});
     b.textContent = 'Chế độ: ' + G.MODES[S.mode || 'easy'];
     b.onclick = function (e) { e.stopPropagation(); S.mode = S.mode === 'detective' ? 'easy' : 'detective'; b.textContent = 'Chế độ: ' + G.MODES[S.mode]; applyMode(); };
     list.insertBefore(b, list.querySelector('[data-m="help"]'));
-    if (!G.DEV) return; // bản cho khách chơi: ẩn nút chơi thử (mở lại bằng đường dẫn có ?dev)
+    if (!G.DEV || !G.TEST_PANEL) return; // tạm tắt hẳn nút chơi thử (bật lại: G.TEST_PANEL = true, rồi mở bằng ?dev)
     var tb = document.createElement('button');
     tb.textContent = 'Thử minigame / cảnh phim';
     tb.onclick = function (e) { e.stopPropagation(); G.ui.close('menu'); testPanel(); };

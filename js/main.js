@@ -5,13 +5,18 @@ var G = window.G || (window.G = {});
   var $ = function (id) { return document.getElementById(id); };
   G.isTouch = ('ontouchstart' in window) || window.matchMedia('(pointer:coarse)').matches;
 
-  // Sân khấu cao 540, bề ngang giãn theo tỉ lệ cửa sổ (960–1200) để màn hình rộng không còn dải đen hai bên
+  // Màn ngang: sân khấu cao 540, bề ngang giãn theo tỉ lệ cửa sổ (960–1200) để màn hình rộng không còn dải đen hai bên.
+  // Màn dọc (điện thoại cầm dọc): ngang 540, cao theo tỉ lệ máy; cảnh ở trên, bàn điều khiển (G.DECK) ở dưới.
   function fit() {
     var ar = window.innerWidth / window.innerHeight;
-    G.VIEW_W = Math.round(Math.max(960, Math.min(1200, G.VIEW_H * ar)));
+    G.portrait = ar < 0.9;
+    if (G.portrait) { G.VIEW_W = 540; G.VIEW_H = Math.round(Math.max(760, Math.min(1240, 540 / ar))); }
+    else { G.VIEW_H = 540; G.VIEW_W = Math.round(Math.max(960, Math.min(1200, G.VIEW_H * ar))); }
+    document.body.classList.toggle('portrait', G.portrait);
+    if (G.world && G.world.mode !== 'sell') G.world.zoom = G.world.baseZoom();
     var s = Math.min(window.innerWidth / G.VIEW_W, window.innerHeight / G.VIEW_H);
     var st = $('stage');
-    st.style.width = G.VIEW_W + 'px';
+    st.style.width = G.VIEW_W + 'px'; st.style.height = G.VIEW_H + 'px';
     st.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
     if (G.S && G.world && G.world.updateCamera && G.LOCATIONS[G.S.loc]) G.world.updateCamera(true);
   }
@@ -33,15 +38,18 @@ var G = window.G || (window.G = {});
     }
   };
 
-  var last = 0;
+  var last = 0, hudT = 0;
   function loop(t) {
     var dt = Math.min(0.05, (t - last) / 1000 || 0);
     last = t;
+    var busy = !!(G.S && G.ui.isBusy()); // đang mở bảng / hội thoại: ẩn cần điều khiển ảo
+    if (busy !== loop.busy) { loop.busy = busy; document.body.classList.toggle('busy', busy); }
     if (G.S && !G.ui.isBusy()) {
       if (G.world.mode === 'sell') G.sell.update(dt);
       else G.world.update(dt);
       G.world.tint();
-      G.ui.hud();
+      hudT -= dt;
+      if (hudT <= 0) { hudT = 0.2; G.ui.hud(); }
     } else {
       G.input.act = false;
       if (G.world.prompt) G.world.prompt.hidden = true;

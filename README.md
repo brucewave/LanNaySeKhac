@@ -12,7 +12,9 @@ rồi vào http://localhost:8123
 ## Điều khiển
 - Bấm / chạm vào cảnh: nhân vật tự tìm đường tới đó. Bấm vào người hoặc đồ vật thì đi lại rồi tương tác. Bấm sát mép để sang cảnh bên.
 - Máy tính: WASD hoặc phím mũi tên đi 8 hướng · E/Space tương tác · Esc menu · J sổ điều tra · I túi đồ · 1/2 chọn trong hội thoại. Khi bán: 1/2/3 chọn món, Space giao, Backspace bỏ khay, X từ chối, Q đóng sạp.
-- Điện thoại (xoay ngang): chạm và kéo nửa trái màn hình để đi (cần điều khiển ảo), nút tương tác bên phải, ☰ menu, bấm trực tiếp khi bán.
+- Điện thoại xoay ngang: chạm và kéo nửa trái màn hình để đi (cần điều khiển ảo), nút tương tác bên phải, ☰ menu, bấm trực tiếp khi bán.
+- Điện thoại cầm dọc (`body.portrait`, tự bật khi màn cao hơn rộng): sân khấu ngang 540, cao theo máy (760–1240). Cảnh ở trên (zoom `G.world.baseZoom()`), bàn điều khiển cao `G.DECK` = 290 ở dưới: dòng ngày / giờ / tiền, cần điều khiển, nút tương tác; hội thoại và thanh bán hàng (2 tầng) nằm trong bàn điều khiển. Cảnh phim hiện khung ngang ở giữa. Đang mở bảng thì ẩn cần điều khiển (`body.busy`).
+- Đồ hoạ Mượt (`js/perf.js`, `body.lite`, mặc định bật trên máy cảm ứng, đổi trong menu > Đồ hoạ): tắt nét run tay (feTurbulence) trên nhân vật, đứng yên hiệu ứng trong ảnh nền / đồ vật, bỏ sương / lá / thiêu thân, lớp tối ban đêm vẽ nửa độ phân giải và 8 lần/giây khi đi, bỏ bụi chân. Mọi máy: HUD ghi 5 lần/giây và chỉ khi chữ đổi, lớp màu trời chỉ ghi khi đổi.
 
 ## Đã có (bước 1–2 của đặc tả)
 - 4 địa điểm hiện tại: Bến sông – Nhà cũ – Đường xóm – Chợ, nối bằng con đường chạy ngang. Nhà cũ, tạp hoá, nhà chợ bỏ mái để thấy bên trong; có va chạm tường và đồ vật, nhân vật và vật đứng sắp lớp theo chiều sâu.
@@ -195,7 +197,7 @@ rồi vào http://localhost:8123
 - Thanh bán hàng (sell.js `render`): thẻ món có giá, số còn, phím tắt, "HẾT"; món khách đang gọi sáng viền vàng; dòng "Khách gọi"; khay 4 ô; nút Giao sáng xanh khi khay đúng món; doanh thu + số khách bên phải.
 - Bảng Chơi thử có thêm mục Truy đuổi (`G.chase.test`): dựng đúng nơi/giờ, chạy xong trả lại nguyên trạng thái game.
 
-- Nút "Thử minigame / cảnh phim" ẩn trong bản cho khách. Mở lại bằng đường dẫn có `?dev` (ví dụ `index.html?dev`).
+- Nút "Thử minigame / cảnh phim" đang tắt hẳn (`G.TEST_PANEL = false` trong v3.js). Bật lại: đặt `G.TEST_PANEL = true` rồi mở bằng đường dẫn có `?dev`.
 
 - Khung game giãn ngang theo cửa sổ (`G.VIEW_W` 960–1200, cao 540) để màn hình rộng không còn dải đen. Tên game dùng font Grenze Gotisch (Google Fonts, có dấu tiếng Việt) + hiệu ứng lượn sóng, chập chờn, bóng ma đỏ. Xe hàng có dấu ! tới lần đầu đẩy xe. Bảng kết có credit "Một trò chơi của @aquaman793".
 

@@ -37,6 +37,7 @@ G.sell = { active: false };
   }
   function buildSeats() {
     P.seatEls = []; P.seats = [];
+    if (G.portrait) return; // màn dọc (điện thoại): khung nhìn hẹp, không bày bàn ghế, khách mua mang đi
     var sx = P.spot.x, sy = P.spot.y;
     [[sx - 160, sy + 24, '#3F6670', '#A32E36'], [sx - 250, sy - 6, '#A32E36', '#3F6670']].forEach(function (t) {
       table(t[0], t[1], t[2]);
@@ -68,7 +69,7 @@ G.sell = { active: false };
     S.x = P.spot.x - 40; S.y = P.spot.y; S.view = 'side'; S.flip = 1;
     G.world.syncPlayer(false);
     buildSeats();
-    zoomTo(1.6, P.spot.x + 30, P.spot.y - 24); // camera sát vào sạp: thấy rõ người bán, hàng khách, bàn ghế
+    zoomTo(G.world.baseZoom() * (G.portrait ? 1 : 1.28), P.spot.x + (G.portrait ? 100 : 30), P.spot.y - 24); // màn dọc: lệch phải để thấy hàng khách // camera sát vào sạp: thấy rõ người bán, hàng khách, bàn ghế
     G.world.prompt.hidden = true;
     $('edge-l').hidden = $('edge-r').hidden = true;
     document.body.classList.add('selling');
@@ -84,7 +85,7 @@ G.sell = { active: false };
     var S = G.S;
     P.customers.forEach(function (c) { if (c.npc) releaseNpc(c); if (c.owe) quit(c); });
     (P.seatEls || []).forEach(function (el) { el.remove(); }); P.seatEls = []; P.seats = [];
-    G.world.zoom = 1.25;
+    G.world.zoom = G.world.baseZoom();
     P.tray.forEach(function (id) { S.stock[id]++; });
     P.tray = [];
     P.customers.forEach(function (c) { c.e.el.remove(); });
@@ -283,7 +284,10 @@ G.sell = { active: false };
     var free = (P.seats || []).filter(function (st) { return !st.used; });
     var sit = !c.npc && free.length && Math.random() < 0.55; // ra ghế ngồi ăn: ăn xong mới trả tiền
     S.stats.sold += got.length; P.r.served++; P.r.items += got.length;
+    // màn dọc không có ghế: thỉnh thoảng khách cầm hàng rồi chuồn luôn (quịt)
+    var dash = G.portrait && !c.npc && !sit && Math.random() < (S.flags.bi_quit ? 0.06 : 0.15);
     if (sit) { c.owe = pay + tip; c.tip = tip; }
+    else if (dash) { c.owe = pay + tip; quit(c, rnd(QUIT)); }
     else { S.money += pay + tip; S.stats.earned += pay + tip; P.r.earned += pay + tip; P.r.tips += tip; }
     P.tray = [];
     if (c.npc === 'bac_ba') {
@@ -296,7 +300,8 @@ G.sell = { active: false };
       leave(c, (partial ? 'Thiếu món thì lấy chừng này. ' : '') + 'Ăn xong trả tiền nhé!');
       var seat = free[Math.floor(Math.random() * free.length)];
       seat.used = c; c.seat = seat; c.state = 'toSeat'; c.ate = got.slice(); c.cid = ++P.cidN;
-    } else leave(c, thank + (partial ? 'Thiếu món thì lấy chừng này. ' : '') + '+' + (pay + tip) + 'k' + (tip ? ' (boa ' + tip + 'k)' : ''));
+    } else if (dash) leave(c, c.say);
+    else leave(c, thank + (partial ? 'Thiếu món thì lấy chừng này. ' : '') + '+' + (pay + tip) + 'k' + (tip ? ' (boa ' + tip + 'k)' : ''));
     if (c.npc) { S.daily[buyKey(c.npc)] = 1; if (G.NPCS[c.npc].onServed) G.NPCS[c.npc].onServed(S); }
     render();
     G.ui.hud();

@@ -60,13 +60,15 @@ var G = window.G || (window.G = {});
 
   var lights = [], lastD = -1, loc = null, lastPX = 0, lastPY = 0;
   function draw(d) {
-    var ctx = cv.getContext('2d');
+    var ctx = cv.getContext('2d'), q = cv._q || 1;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, cv.width, cv.height);
     if (d <= 0.005) return;
     ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = 'rgba(4,8,18,' + d + ')';
     ctx.fillRect(0, 0, cv.width, cv.height);
     ctx.globalCompositeOperation = 'destination-out';
+    ctx.setTransform(q, 0, 0, q, 0, 0);
     var S = G.S, me = { x: S.x, y: S.y - 30, r: W.mode === 'sell' ? 300 : 190, k: 0.55 }; // quầng sáng nhẹ quanh mình: luôn thấy rõ chỗ đang đứng, hàng khách
     lights.concat([me]).forEach(function (l) {
       var k = l.k || 1, g = ctx.createRadialGradient(l.x, l.y, 0, l.x, l.y, l.r);
@@ -79,7 +81,9 @@ var G = window.G || (window.G = {});
     var S = G.S, Lc = G.LOCATIONS[S.loc];
     loc = S.loc;
     lights = lastLights.concat(MAN[S.loc] || []);
-    cv.width = Lc.width; cv.height = Lc.height;
+    cv._q = G.lite ? 0.5 : 1;
+    cv.width = Math.round(Lc.width * cv._q); cv.height = Math.round(Lc.height * cv._q);
+    cv.style.width = Lc.width + 'px'; cv.style.height = Lc.height + 'px';
     amb.style.width = Lc.width + 'px'; amb.style.height = Lc.height + 'px';
     // quầng sáng ấm
     glows.innerHTML = lights.map(function (l) {
@@ -133,14 +137,14 @@ var G = window.G || (window.G = {});
     if (tick0) tick0(dt);
     acc += dt;
     var S = G.S;
-    if (acc > 0.5 || (S && lastD > 0.005 && Math.abs(S.x - lastPX) + Math.abs(S.y - lastPY) > 3)) { acc = 0; update(); }
+    if (acc > 0.5 || (S && lastD > 0.005 && (!G.lite || acc > 0.12) && Math.abs(S.x - lastPX) + Math.abs(S.y - lastPY) > 3)) { acc = 0; update(); }
   };
   // lớp tối mới lo phần đêm: tông màu cũ chỉ còn ánh xanh nhẹ
   var tint0 = W.tint;
   W.tint = function () {
     tint0.apply(this, arguments);
     var S = G.S;
-    if (S && !S.era && S.min >= 16 * 60) $('tint').style.background = 'rgba(20,32,56,' + (darkness(S) * 0.22).toFixed(3) + ')';
+    if (S && !S.era && S.min >= 16 * 60) { var bg = 'rgba(20,32,56,' + (darkness(S) * 0.22).toFixed(3) + ')', tn = $('tint'); if (tn._bg !== bg) { tn._bg = bg; tn.style.background = bg; } }
   };
   G.ambience = { rebuild: build, darkness: darkness };
 })();

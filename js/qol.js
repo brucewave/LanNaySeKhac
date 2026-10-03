@@ -352,7 +352,8 @@ var G = window.G || (window.G = {});
       dustT -= dt;
       if (dustT <= 0) {
         var fl = S0.flip || 1, side = S0.view === 'side';
-        if (S0.riding) { dustT = 0.1; puff(S0.x - (side ? fl * 36 : 0), S0.y - (side ? 10 : 4), true, side ? fl : 0); }
+        if (G.lite && !S0.riding) dustT = 1;
+        else if (S0.riding) { dustT = G.lite ? 0.22 : 0.1; puff(S0.x - (side ? fl * 36 : 0), S0.y - (side ? 10 : 4), true, side ? fl : 0); }
         else { dustT = 0.25; puff(S0.x + (side ? -fl * 8 : (Math.random() * 16 - 8)), S0.y, false, side ? fl : 0); }
       }
     }
