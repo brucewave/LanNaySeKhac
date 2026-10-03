@@ -229,7 +229,7 @@ var G = window.G || (window.G = {});
       var p = document.getElementById('ending'); // after-credit: tên tác giả
       if (p && !p.querySelector('.credits')) {
         var c = document.createElement('div'); c.className = 'credits';
-        c.innerHTML = '<span>Một trò chơi của</span><b>@aquaman793</b><small>Cảm ơn bạn đã chơi đến cuối.</small>';
+        c.innerHTML = '<span>Một trò chơi của</span><b>@aquamann793</b><small>Cảm ơn bạn đã chơi đến cuối.</small>';
         var list = p.querySelector('.list:last-child'); if (list) p.insertBefore(c, list); else p.appendChild(c);
       }
     }

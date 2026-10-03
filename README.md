@@ -199,7 +199,7 @@ rồi vào http://localhost:8123
 
 - Nút "Thử minigame / cảnh phim" đang tắt hẳn (`G.TEST_PANEL = false` trong v3.js). Bật lại: đặt `G.TEST_PANEL = true` rồi mở bằng đường dẫn có `?dev`.
 
-- Khung game giãn ngang theo cửa sổ (`G.VIEW_W` 960–1200, cao 540) để màn hình rộng không còn dải đen. Tên game dùng font Grenze Gotisch (Google Fonts, có dấu tiếng Việt) + hiệu ứng lượn sóng, chập chờn, bóng ma đỏ. Xe hàng có dấu ! tới lần đầu đẩy xe. Bảng kết có credit "Một trò chơi của @aquaman793".
+- Khung game giãn ngang theo cửa sổ (`G.VIEW_W` 960–1200, cao 540) để màn hình rộng không còn dải đen. Tên game dùng font Grenze Gotisch (Google Fonts, có dấu tiếng Việt) + hiệu ứng lượn sóng, chập chờn, bóng ma đỏ. Xe hàng có dấu ! tới lần đầu đẩy xe. Bảng kết có credit "Một trò chơi của @aquamann793".
 
 ## Album tem meme — js/stamps.js
 - Món mới **Kẹo dừa** (nhập 4k, bán 8k, để được lâu; học sinh và người già thích). Phím 4 khi bán.
