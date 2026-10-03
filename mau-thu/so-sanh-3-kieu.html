@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>So sánh 3 kiểu nhân vật</title>
+<style>
+  body { margin: 0; padding: 24px 16px; background: #2B2E35; color: #EEE; font: 16px/1.4 system-ui, sans-serif; }
+  .row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+  figure { margin: 0; padding: 16px; background: #C9BFA8; border-radius: 12px; text-align: center; }
+  figcaption { margin-top: 10px; color: #2B2E35; font-weight: 600; }
+  svg, canvas { display: block; width: 240px; height: 360px; }
+  canvas { image-rendering: pixelated; height: 320px; margin: 20px 0; }
+</style>
+</head>
+<body>
+<div class="row">
+
+<figure>
+<!--S:painted-->
+<svg viewBox="0 0 200 300">
+  <defs>
+    <filter id="pt" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 .8" result="ga"/>
+      <feComposite in="ga" in2="d" operator="in" result="gg"/>
+      <feMerge><feMergeNode in="d"/><feMergeNode in="gg"/></feMerge>
+    </filter>
+    <filter id="bl"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <linearGradient id="pO" x1="0" x2="1"><stop offset="0" stop-color="#F6A53A"/><stop offset="1" stop-color="#B9591A"/></linearGradient>
+    <linearGradient id="pN" x1="0" x2="1"><stop offset="0" stop-color="#3C5690"/><stop offset="1" stop-color="#18264A"/></linearGradient>
+    <linearGradient id="pH" x1="0" x2="1"><stop offset="0" stop-color="#F3E3A4"/><stop offset="1" stop-color="#B99A4A"/></linearGradient>
+    <radialGradient id="pS" cx=".35" cy=".4"><stop offset="0" stop-color="#F7D6B0"/><stop offset="1" stop-color="#C98F68"/></radialGradient>
+  </defs>
+  <ellipse cx="100" cy="150" rx="86" ry="120" fill="#F1E4C6" opacity=".7" filter="url(#bl)"/>
+  <g filter="url(#pt)">
+    <ellipse cx="104" cy="290" rx="60" ry="8" fill="#3A2A1A" opacity=".4"/>
+    <rect x="72" y="226" width="25" height="58" fill="url(#pN)"/>
+    <rect x="103" y="226" width="25" height="58" fill="url(#pN)"/>
+    <ellipse cx="82" cy="286" rx="17" ry="7" fill="#26222A"/>
+    <ellipse cx="118" cy="286" rx="17" ry="7" fill="#26222A"/>
+    <path d="M66,162 L50,226M134,162 L150,226" stroke="#C96A1C" stroke-width="19" stroke-linecap="round"/>
+    <circle cx="49" cy="233" r="10" fill="url(#pS)"/>
+    <circle cx="151" cy="233" r="10" fill="url(#pS)"/>
+    <path d="M62,160 Q62,150 78,150 L122,150 Q138,150 138,160 L142,232 Q100,242 58,232 Z" fill="url(#pO)"/>
+    <rect x="90" y="140" width="20" height="16" fill="#C98F68"/>
+    <ellipse cx="100" cy="112" rx="34" ry="36" fill="url(#pS)"/>
+    <path d="M68,98 Q100,112 132,98 L132,108 Q100,122 68,108 Z" fill="#7A4A2A" opacity=".4"/>
+    <ellipse cx="88" cy="118" rx="3" ry="4.5" fill="#2A1C14"/>
+    <ellipse cx="112" cy="118" rx="3" ry="4.5" fill="#2A1C14"/>
+    <circle cx="80" cy="128" r="7" fill="#E8826E" opacity=".5"/>
+    <circle cx="120" cy="128" r="7" fill="#E8826E" opacity=".5"/>
+    <path d="M92,132 q8,6 16,0" stroke="#9A4A3A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M100,20 L178,92 Q100,108 22,92 Z" fill="url(#pH)"/>
+    <g filter="url(#bl)" fill="none" stroke-linecap="round">
+      <path d="M92,38 L44,86" stroke="#FFF6D0" stroke-width="7" opacity=".6"/>
+      <path d="M112,42 L160,88" stroke="#8A6A2A" stroke-width="8" opacity=".45"/>
+      <path d="M50,84 Q100,98 150,84" stroke="#A8873A" stroke-width="3" opacity=".6"/>
+      <path d="M72,166 Q70,195 68,224" stroke="#FFD08A" stroke-width="8" opacity=".55"/>
+      <path d="M130,160 Q134,195 136,228" stroke="#7A3410" stroke-width="9" opacity=".45"/>
+      <path d="M86,152 L100,170 L114,152" stroke="#7A3410" stroke-width="4" opacity=".5"/>
+      <path d="M78,236 V278M109,236 V278" stroke="#7E9AD6" stroke-width="5" opacity=".5"/>
+      <path d="M80,110 Q78,122 86,136" stroke="#FFEBD0" stroke-width="6" opacity=".5"/>
+    </g>
+  </g>
+</svg>
+<!--E:painted-->
+<figcaption>Painted</figcaption>
+</figure>
+
+<figure>
+<!--S:pixel-->
+<canvas id="px" width="24" height="32"></canvas>
+<script>
+(() => {
+  const pal = { H:'#EBD893', h:'#C9AE5C', K:'#2A1F1A', S:'#F2C9A0', s:'#D29E74', E:'#1E1B1B', M:'#B5564A',
+                O:'#F08F24', o:'#C46A12', N:'#2B4170', n:'#1A2A50', B:'#35353B' };
+  const rows = [
+    '...........Hh...........',
+    '..........HHhh..........',
+    '.........HHHhhh.........',
+    '.......HHHHHhhhhh.......',
+    '.....HHHHHHHhhhhhhh.....',
+    '...HHHHHHHHHhhhhhhhhh...',
+    '.KHHHHHHHHHHhhhhhhhhhhK.',
+    '.......KssssssssK.......',
+    '.......KSSSSSSSsK.......',
+    '.......KSESSSSEsK.......',
+    '.......KSSSSSSSsK.......',
+    '.......KSSSMMSSsK.......',
+    '........KSSSSSsK........',
+    '..........Ssss..........',
+    '.....KOOOOOssOOOooK.....',
+    '....KOOOOOOOOOOOOooK....',
+    '....KOOOOOOOOOOOOooK....',
+    '....KOOKOOOOOOOoKooK....',
+    '....KOOKOOOOOOOoKooK....',
+    '....KOOKOOOOOOOoKooK....',
+    '....KOOKOOOOOOOoKooK....',
+    '....KSSKOOOOOOOoKSsK....',
+    '.....KKKNNNNNNNnKKK.....',
+    '.......KNNNNNNNnK.......',
+    '.......KNNNKKNNnK.......',
+    '.......KNNNKKNNnK.......',
+    '.......KNNNKKNNnK.......',
+    '.......KNNNKKNNnK.......',
+    '.......KNNNKKNNnK.......',
+    '.......KNNNKKNNnK.......',
+    '......KBBBBKKBBBBK......',
+    '......KKKKKKKKKKKK......',
+  ];
+  const c = document.getElementById('px').getContext('2d');
+  rows.forEach((r, y) => [...r].forEach((ch, x) => {
+    if (pal[ch]) { c.fillStyle = pal[ch]; c.fillRect(x, y, 1, 1); }
+  }));
+})();
+</script>
+<!--E:pixel-->
+<figcaption>Pixel art</figcaption>
+</figure>
+
+<figure>
+<!--S:skeuo-->
+<svg viewBox="0 0 200 300">
+  <defs>
+    <radialGradient id="kS" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFE3C4"/><stop offset=".6" stop-color="#E0A77C"/><stop offset="1" stop-color="#B07450"/></radialGradient>
+    <radialGradient id="kO" cx=".3" cy=".2" r=".9"><stop offset="0" stop-color="#FFC870"/><stop offset=".5" stop-color="#F08F24"/><stop offset="1" stop-color="#9A460A"/></radialGradient>
+    <linearGradient id="kN" x1="0" x2="1"><stop offset="0" stop-color="#2B4170"/><stop offset=".3" stop-color="#5A78BC"/><stop offset=".6" stop-color="#2B4170"/><stop offset="1" stop-color="#111C38"/></linearGradient>
+    <linearGradient id="kH" x1="0" x2="1"><stop offset="0" stop-color="#D9BE6C"/><stop offset=".35" stop-color="#FFF3C0"/><stop offset=".7" stop-color="#D2B45E"/><stop offset="1" stop-color="#94742C"/></linearGradient>
+    <radialGradient id="kB" cx=".35" cy=".3"><stop offset="0" stop-color="#77777F"/><stop offset="1" stop-color="#0E0E12"/></radialGradient>
+    <linearGradient id="kW" x1="0" x2="1"><stop offset="0" stop-color="#6A421E"/><stop offset=".3" stop-color="#C89058"/><stop offset=".7" stop-color="#8A5A2E"/><stop offset="1" stop-color="#4A2C12"/></linearGradient>
+    <linearGradient id="kM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF0B0"/><stop offset=".5" stop-color="#D4A83A"/><stop offset="1" stop-color="#8A6412"/></linearGradient>
+    <filter id="ds" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity=".5"/></filter>
+    <filter id="sb"><feGaussianBlur stdDeviation="2.5"/></filter>
+  </defs>
+  <!-- đế gỗ -->
+  <ellipse cx="100" cy="292" rx="84" ry="8" fill="#000" opacity=".35" filter="url(#sb)"/>
+  <path d="M22,268 V282 A78,15 0 0 0 178,282 V268 Z" fill="url(#kW)"/>
+  <ellipse cx="100" cy="268" rx="78" ry="15" fill="#B9804A"/>
+  <g fill="none" stroke="#8A5A2E" stroke-width="1.2" opacity=".6">
+    <ellipse cx="96" cy="268" rx="62" ry="11"/><ellipse cx="92" cy="268" rx="44" ry="7.5"/><ellipse cx="88" cy="268" rx="24" ry="4"/>
+  </g>
+  <ellipse cx="100" cy="268" rx="78" ry="15" fill="none" stroke="#E8BE8A" stroke-width="1.5" opacity=".7"/>
+  <rect x="74" y="284" width="52" height="10" rx="2" fill="url(#kM)" stroke="#6A4C0C" stroke-width=".8"/>
+  <!-- tượng -->
+  <g filter="url(#ds)" transform="translate(0,-18)">
+    <ellipse cx="100" cy="287" rx="46" ry="6" fill="#000" opacity=".35" filter="url(#sb)"/>
+    <rect x="72" y="226" width="25" height="58" rx="5" fill="url(#kN)"/>
+    <rect x="103" y="226" width="25" height="58" rx="5" fill="url(#kN)"/>
+    <ellipse cx="82" cy="284" rx="17" ry="8" fill="url(#kB)"/>
+    <ellipse cx="118" cy="284" rx="17" ry="8" fill="url(#kB)"/>
+    <path d="M66,162 L50,226M134,162 L150,226" stroke="#C96A1C" stroke-width="19" stroke-linecap="round"/>
+    <path d="M62,164 L47,224" stroke="#FFC870" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+    <circle cx="49" cy="233" r="10" fill="url(#kS)"/>
+    <circle cx="151" cy="233" r="10" fill="url(#kS)"/>
+    <path d="M62,160 Q62,150 78,150 L122,150 Q138,150 138,160 L142,232 Q100,242 58,232 Z" fill="url(#kO)"/>
+    <ellipse cx="100" cy="156" rx="30" ry="7" fill="#5A2A06" opacity=".45" filter="url(#sb)"/>
+    <ellipse cx="78" cy="186" rx="6" ry="26" fill="#fff" opacity=".4" filter="url(#sb)"/>
+    <g fill="url(#kM)" stroke="#6A4C0C" stroke-width=".8"><circle cx="100" cy="176" r="3.5"/><circle cx="100" cy="194" r="3.5"/><circle cx="100" cy="212" r="3.5"/></g>
+    <rect x="90" y="140" width="20" height="16" fill="#B07450"/>
+    <ellipse cx="100" cy="112" rx="34" ry="36" fill="url(#kS)"/>
+    <path d="M66,96 Q100,110 134,96 L134,110 Q100,126 66,110 Z" fill="#4A2A12" opacity=".45" filter="url(#sb)"/>
+    <ellipse cx="84" cy="124" rx="7" ry="10" fill="#fff" opacity=".35" filter="url(#sb)"/>
+    <g fill="#141014"><circle cx="88" cy="120" r="5"/><circle cx="112" cy="120" r="5"/></g>
+    <g fill="#fff"><circle cx="86.500" cy="118" r="1.6"/><circle cx="110.500" cy="118" r="1.6"/></g>
+    <path d="M92,134 q8,6 16,0" stroke="#8A3A2A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M100,20 L178,92 Q100,108 22,92 Z" fill="url(#kH)"/>
+    <g fill="none" stroke-width="1.2">
+      <path d="M74,46 Q100,52 126,46M56,62 Q100,72 144,62M38,79 Q100,92 162,79" stroke="#8A6C28" opacity=".7"/>
+      <path d="M74,48 Q100,54 126,48M56,64 Q100,74 144,64M38,81 Q100,94 162,81" stroke="#FFF8D8" opacity=".7"/>
+    </g>
+    <path d="M22,92 Q100,108 178,92" stroke="#7A5E22" stroke-width="2.5" fill="none"/>
+    <path d="M94,30 L50,82" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".45" filter="url(#sb)"/>
+    <path d="M77,238 V274M108,238 V274" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".3"/>
+    <g fill="#fff" opacity=".7"><ellipse cx="76" cy="281" rx="5" ry="2"/><ellipse cx="112" cy="281" rx="5" ry="2"/></g>
+  </g>
+</svg>
+<!--E:skeuo-->
+<figcaption>Skeuomorphic</figcaption>
+</figure>
+
+</div>
+</body>
+</html>

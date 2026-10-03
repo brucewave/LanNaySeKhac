@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <pattern id="brick" width="160" height="80" patternUnits="userSpaceOnUse">
+      <rect width="160" height="80" fill="#DCC193"/>
+      <rect x="0" y="0" width="160" height="40" fill="#D8BC8C"/>
+      <rect x="84" y="2" width="74" height="36" fill="#E2C89C"/>
+      <rect x="2" y="42" width="76" height="36" fill="#D3B684"/>
+      <path d="M0,0H160M0,40H160M80,0V40M0,40V80M160,40V80" stroke="#C2A572" stroke-width="2.5" fill="none"/>
+    </pattern>
+    <pattern id="tile" width="90" height="105" patternUnits="userSpaceOnUse">
+      <rect width="90" height="105" fill="#D2CABA"/>
+      <path d="M0,0V105M0,52H90" stroke="#BDB4A2" stroke-width="2" fill="none"/>
+    </pattern>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF6DD" stop-opacity=".45"/>
+      <stop offset=".6" stop-color="#FFF6DD" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="wallFoot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6B4E22" stop-opacity="0"/>
+      <stop offset="1" stop-color="#6B4E22" stop-opacity=".28"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8FC3D6"/>
+      <stop offset="1" stop-color="#4E86A0"/>
+    </linearGradient>
+    <clipPath id="frame"><rect width="800" height="600"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <!-- tường -->
+    <rect width="800" height="430" fill="url(#brick)"/>
+    <rect width="800" height="430" fill="url(#sun)"/>
+    <rect y="350" width="800" height="80" fill="url(#wallFoot)"/>
+
+    <!-- cửa sổ -->
+    <g transform="translate(540,56)">
+      <rect x="-8" y="-8" width="176" height="176" rx="4" fill="#8A5A2E"/>
+      <rect width="160" height="160" fill="url(#glass)"/>
+      <path d="M0,160 L70,0 H110 L40,160 Z" fill="#fff" opacity=".18"/>
+      <path d="M80,0V160M0,80H160" stroke="#8A5A2E" stroke-width="8"/>
+      <!-- cánh cửa chớp -->
+      <g fill="#3F8F86">
+        <rect x="-62" y="-8" width="54" height="176" rx="3"/>
+        <rect x="168" y="-8" width="54" height="176" rx="3"/>
+      </g>
+      <g stroke="#2F726A" stroke-width="3">
+        <path d="M-54,12h38M-54,30h38M-54,48h38M-54,66h38M-54,84h38M-54,102h38M-54,120h38M-54,138h38"/>
+        <path d="M176,12h38M176,30h38M176,48h38M176,66h38M176,84h38M176,102h38M176,120h38M176,138h38"/>
+      </g>
+      <!-- bồn hoa -->
+      <rect x="-4" y="168" width="168" height="22" rx="4" fill="#A7532F"/>
+      <rect x="-4" y="168" width="168" height="7" rx="3" fill="#C26A40"/>
+      <g fill="#4E9A51">
+        <circle cx="20" cy="162" r="14"/><circle cx="48" cy="156" r="17"/><circle cx="80" cy="160" r="15"/>
+        <circle cx="110" cy="155" r="18"/><circle cx="140" cy="162" r="14"/>
+      </g>
+      <g fill="#3B7D40"><circle cx="34" cy="166" r="9"/><circle cx="95" cy="166" r="10"/><circle cx="126" cy="167" r="8"/></g>
+      <g fill="#F26D7D"><circle cx="22" cy="154" r="5"/><circle cx="84" cy="150" r="5"/><circle cx="138" cy="155" r="5"/></g>
+      <g fill="#FFD166"><circle cx="50" cy="146" r="5"/><circle cx="112" cy="144" r="5"/></g>
+    </g>
+
+    <!-- đèn tường -->
+    <g transform="translate(300,40)">
+      <rect x="-5" y="-40" width="10" height="46" fill="#6E737B"/>
+      <path d="M0,4 h34 v10" stroke="#6E737B" stroke-width="6" fill="none" stroke-linejoin="round"/>
+      <path d="M16,14 h36 l10,26 h-56 z" fill="#3D4148"/>
+      <path d="M12,40 h44 q-4,14 -22,14 q-18,0 -22,-14 z" fill="#FFE9A8"/>
+      <path d="M-30,150 L12,44 H56 L98,150 Z" fill="#FFF3C4" opacity=".16"/>
+    </g>
+
+    <!-- vỉa hè, bó vỉa, lòng đường -->
+    <rect y="430" width="800" height="105" fill="url(#tile)"/>
+    <rect y="430" width="800" height="10" fill="#000" opacity=".10"/>
+    <rect y="535" width="800" height="14" fill="#A39C8E"/>
+    <rect y="535" width="800" height="4" fill="#BDB6A8"/>
+    <rect y="549" width="800" height="51" fill="#4B4F58"/>
+    <rect y="549" width="800" height="5" fill="#000" opacity=".18"/>
+
+    <!-- ===== cô áo trắng (đi sang trái) ===== -->
+    <g transform="translate(150,512) scale(-0.95,0.95)">
+      <ellipse cx="0" cy="2" rx="66" ry="10" fill="#000" opacity=".18"/>
+      <!-- tay xa -->
+      <path d="M4,-234 L-14,-192 L-20,-156" stroke="#D9D5CC" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="-21" cy="-150" r="8" fill="#DDAE85"/>
+      <!-- chân xa -->
+      <path d="M-2,-140 L-12,-74 L-42,-30" stroke="#1F3157" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <g transform="translate(-58,-22) rotate(22)"><path d="M0,-12 L24,-12 Q44,-9 48,0 L0,0 Z" fill="#2A2A2E"/></g>
+      <!-- chân gần -->
+      <path d="M4,-140 L24,-76 L28,-14" stroke="#2B4170" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M16,-12 L40,-12 Q60,-9 64,0 L16,0 Z" fill="#35353B"/>
+      <!-- áo -->
+      <path d="M-26,-230 Q-28,-248 -8,-250 L8,-250 Q28,-248 28,-228 L32,-135 Q32,-120 14,-120 L-16,-120 Q-32,-120 -30,-138 Z" fill="#F8F6F1"/>
+      <path d="M-26,-230 Q-28,-248 -8,-250 L-4,-250 Q-14,-190 -10,-120 L-16,-120 Q-32,-120 -30,-138 Z" fill="#DDD9D0"/>
+      <path d="M-4,-250 L12,-250 L6,-238 Z" fill="#DDD9D0"/>
+      <path d="M-30,-140 Q0,-132 32,-140" stroke="#DDD9D0" stroke-width="2" fill="none"/>
+      <!-- cổ, đầu -->
+      <rect x="-5" y="-258" width="14" height="12" fill="#DDAE85"/>
+      <circle cx="4" cy="-276" r="25" fill="#F4CFAA"/>
+      <path d="M28,-279 q7,5 0,9 z" fill="#F4CFAA"/>
+      <circle cx="12" cy="-265" r="6" fill="#F29C96" opacity=".55"/>
+      <ellipse cx="18" cy="-277" rx="2.5" ry="3.5" fill="#222"/>
+      <path d="M12,-285 q6,-3 11,0" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M15,-262 q5,3 9,0" stroke="#B5564A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- tóc dài -->
+      <path d="M8,-304 Q-28,-306 -30,-272 L-34,-196 Q-34,-184 -22,-184 L-12,-184 Q-8,-230 -8,-262 Q-4,-284 22,-291 Q20,-303 8,-304 Z" fill="#1E1B1B"/>
+      <path d="M-22,-272 L-26,-200" stroke="#403838" stroke-width="3" stroke-linecap="round"/>
+      <path d="M-8,-296 Q6,-298 14,-292" stroke="#403838" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <!-- tay gần + túi xách -->
+      <path d="M8,-150 q10,-22 20,0" stroke="#7A3526" stroke-width="3" fill="none"/>
+      <rect x="0" y="-148" width="36" height="40" rx="5" fill="#C0563F"/>
+      <rect x="0" y="-148" width="36" height="10" rx="5" fill="#A8452F"/>
+      <path d="M0,-234 L6,-192 L16,-156" stroke="#DDD9D0" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M0,-234 L6,-192 L16,-156" stroke="#F8F6F1" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="-150" r="8" fill="#F4CFAA"/>
+    </g>
+
+    <!-- ===== chú đội nón lá (đi sang phải) ===== -->
+    <g transform="translate(360,508)">
+      <ellipse cx="2" cy="2" rx="70" ry="10" fill="#000" opacity=".18"/>
+      <!-- tay xa -->
+      <path d="M6,-236 L30,-196 L44,-164" stroke="#D2761A" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="46" cy="-158" r="9" fill="#DDAE85"/>
+      <!-- chân xa -->
+      <path d="M-2,-140 L-12,-74 L-42,-30" stroke="#1F3157" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <g transform="translate(-58,-22) rotate(22)">
+        <path d="M0,-14 L26,-14 Q46,-10 50,0 L0,0 Z" fill="#2A2A2E"/>
+        <rect x="0" y="-3" width="50" height="3" fill="#D9D9D9"/>
+      </g>
+      <!-- chân gần -->
+      <path d="M4,-140 L24,-76 L28,-14" stroke="#2B4170" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M16,-14 L42,-14 Q62,-10 66,0 L16,0 Z" fill="#35353B"/>
+      <rect x="16" y="-3" width="50" height="3" fill="#EDEDED"/>
+      <!-- áo -->
+      <path d="M-30,-232 Q-32,-250 -8,-252 L10,-252 Q32,-250 32,-228 L34,-150 Q34,-132 14,-132 L-14,-132 Q-32,-132 -32,-150 Z" fill="#F08F24"/>
+      <path d="M-30,-232 Q-32,-250 -8,-252 L-4,-252 Q-16,-200 -12,-132 L-14,-132 Q-32,-132 -32,-150 Z" fill="#D2761A"/>
+      <path d="M-4,-252 L14,-252 L8,-238 Z" fill="#D2761A"/>
+      <rect x="10" y="-212" width="16" height="16" rx="2" fill="none" stroke="#D2761A" stroke-width="2"/>
+      <!-- cổ, đầu -->
+      <rect x="-6" y="-260" width="16" height="14" fill="#DDAE85"/>
+      <circle cx="4" cy="-276" r="26" fill="#F2C9A0"/>
+      <path d="M29,-280 q8,5 0,9 z" fill="#F2C9A0"/>
+      <ellipse cx="-2" cy="-274" rx="5" ry="7" fill="#E3B288"/>
+      <path d="M-22,-292 L-2,-292 Q-8,-278 -10,-264 Q-20,-266 -22,-278 Z" fill="#1E1B1B"/>
+      <ellipse cx="18" cy="-277" rx="2.5" ry="3.5" fill="#222"/>
+      <path d="M14,-262 q5,3 9,0" stroke="#B5654A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M-12,-290 Q-4,-250 14,-250" stroke="#8B6B3A" stroke-width="1.8" fill="none"/>
+      <!-- nón lá -->
+      <path d="M-20,-288 Q4,-280 30,-288 L30,-282 Q4,-275 -20,-282 Z" fill="#000" opacity=".15"/>
+      <path d="M4,-348 L64,-292 Q4,-281 -56,-292 Z" fill="#EBD893"/>
+      <path d="M4,-348 L64,-292 Q38,-286 14,-285 Z" fill="#D2BA68"/>
+      <path d="M-36,-310 Q4,-302 44,-310M-19,-327 Q4,-322 27,-327" stroke="#C4AA58" stroke-width="1.6" fill="none"/>
+      <path d="M4,-348 L-56,-292" stroke="#F6E9B4" stroke-width="2"/>
+      <!-- tay gần -->
+      <path d="M0,-236 L-18,-192 L-26,-154" stroke="#D2761A" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M0,-236 L-18,-192 L-26,-154" stroke="#F08F24" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="-27" cy="-147" r="9" fill="#F2C9A0"/>
+    </g>
+
+    <!-- ===== xe máy giao hàng ===== -->
+    <g transform="translate(660,588) scale(1.35)">
+      <ellipse cx="0" cy="2" rx="120" ry="10" fill="#000" opacity=".30"/>
+      <!-- ống xả -->
+      <rect x="-112" y="-40" width="60" height="12" rx="6" fill="#8A8F98"/>
+      <!-- phuộc trước -->
+      <path d="M58,-116 L66,-24" stroke="#8A8F98" stroke-width="6" stroke-linecap="round"/>
+      <!-- bánh -->
+      <g>
+        <circle cx="-62" cy="-24" r="24" fill="#26262A"/><circle cx="-62" cy="-24" r="13" fill="#B8BCC4"/><circle cx="-62" cy="-24" r="5" fill="#5E636B"/>
+        <circle cx="66" cy="-24" r="24" fill="#26262A"/><circle cx="66" cy="-24" r="13" fill="#B8BCC4"/><circle cx="66" cy="-24" r="5" fill="#5E636B"/>
+      </g>
+      <!-- thân sau -->
+      <path d="M-96,-58 Q-98,-84 -70,-88 L-10,-88 Q0,-88 4,-76 L14,-44 L-30,-40 Q-40,-66 -64,-64 Q-84,-62 -90,-44 Z" fill="#5FAE6E"/>
+      <path d="M-96,-58 Q-97,-70 -88,-78 L-4,-70 L6,-70 L14,-44 L-30,-40 Q-40,-66 -64,-64 Q-84,-62 -90,-44 Z" fill="#4A9159"/>
+      <rect x="-100" y="-76" width="10" height="14" rx="3" fill="#E5483B"/>
+      <!-- sàn để chân -->
+      <path d="M-30,-40 L14,-44 L40,-44 L40,-32 L-28,-28 Z" fill="#3F7D4C"/>
+      <!-- yếm trước -->
+      <path d="M34,-44 L50,-122 L66,-122 L62,-70 Q64,-50 46,-34 L34,-32 Z" fill="#5FAE6E"/>
+      <path d="M50,-122 L58,-122 L48,-34 L34,-32 L34,-44 Z" fill="#4A9159"/>
+      <ellipse cx="66" cy="-108" rx="5" ry="10" fill="#FFE9A8"/>
+      <!-- chắn bùn trước -->
+      <path d="M38,-38 Q66,-68 96,-36 L88,-32 Q66,-52 46,-32 Z" fill="#3F7D4C"/>
+      <!-- yên -->
+      <path d="M-86,-90 Q-86,-102 -70,-102 L-6,-100 Q6,-98 2,-88 L-86,-88 Z" fill="#2B2B30"/>
+      <path d="M-80,-98 L-10,-96" stroke="#4A4A52" stroke-width="2" stroke-linecap="round"/>
+      <!-- tay lái + gương -->
+      <path d="M58,-122 L54,-142" stroke="#5E636B" stroke-width="6" stroke-linecap="round"/>
+      <path d="M42,-142 L68,-147" stroke="#26262A" stroke-width="7" stroke-linecap="round"/>
+      <path d="M54,-144 L46,-168" stroke="#26262A" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="45" cy="-172" rx="8" ry="6" fill="#26262A"/>
+      <ellipse cx="46" cy="-172" rx="5" ry="3.5" fill="#9FC6D6"/>
+      <!-- thùng hàng -->
+      <rect x="-104" y="-104" width="50" height="6" fill="#5E636B"/>
+      <rect x="-114" y="-160" width="70" height="58" rx="6" fill="#D8362B"/>
+      <rect x="-114" y="-160" width="70" height="14" rx="6" fill="#B52A21"/>
+      <rect x="-114" y="-150" width="70" height="4" fill="#B52A21"/>
+      <rect x="-108" y="-142" width="8" height="34" rx="3" fill="#fff" opacity=".22"/>
+      <circle cx="-76" cy="-124" r="12" fill="#fff"/>
+      <path d="M-82,-124 l4,5 l8,-10" stroke="#D8362B" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- ===== anh giao hàng ===== -->
+    <g transform="translate(478,590)">
+      <ellipse cx="2" cy="2" rx="52" ry="9" fill="#000" opacity=".30"/>
+      <!-- tay xa -->
+      <path d="M6,-236 L12,-192 L14,-158" stroke="#DBA20F" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- chân -->
+      <path d="M-8,-140 L-10,-76 L-10,-14" stroke="#1F3157" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M-24,-14 L2,-14 Q22,-10 26,0 L-24,0 Z" fill="#2A2A2E"/>
+      <path d="M8,-140 L12,-76 L12,-14" stroke="#2B4170" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M-2,-14 L24,-14 Q44,-10 48,0 L-2,0 Z" fill="#35353B"/>
+      <rect x="-2" y="-3" width="50" height="3" fill="#EDEDED"/>
+      <!-- áo khoác -->
+      <path d="M-30,-232 Q-32,-250 -8,-252 L10,-252 Q32,-250 32,-228 L34,-150 Q34,-132 14,-132 L-14,-132 Q-32,-132 -32,-150 Z" fill="#FFC530"/>
+      <path d="M-30,-232 Q-32,-250 -8,-252 L-4,-252 Q-16,-200 -12,-132 L-14,-132 Q-32,-132 -32,-150 Z" fill="#DBA20F"/>
+      <path d="M-32,-186 H34 V-174 H-32 Z" fill="#fff" opacity=".75"/>
+      <path d="M-4,-252 L14,-252 L8,-238 Z" fill="#DBA20F"/>
+      <!-- cổ, đầu -->
+      <rect x="-6" y="-260" width="16" height="14" fill="#DDAE85"/>
+      <circle cx="4" cy="-276" r="26" fill="#F2C9A0"/>
+      <path d="M29,-279 q8,5 0,9 z" fill="#F2C9A0"/>
+      <ellipse cx="-2" cy="-270" rx="5" ry="7" fill="#E3B288"/>
+      <ellipse cx="18" cy="-273" rx="2.5" ry="3.5" fill="#222"/>
+      <path d="M14,-260 q5,4 10,-1" stroke="#B5654A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M-8,-280 Q-2,-250 12,-250" stroke="#55595F" stroke-width="2.5" fill="none"/>
+      <!-- mũ bảo hiểm -->
+      <path d="M-26,-280 A29,29 0 0 1 32,-280 Z" fill="#F4F4F4"/>
+      <path d="M-26,-280 A29,29 0 0 1 -6,-306 Q-14,-294 -12,-280 Z" fill="#D4D6DA"/>
+      <path d="M30,-287 L47,-281 Q48,-278 44,-278 L30,-278 Z" fill="#C9CCD1"/>
+      <rect x="-26" y="-284" width="58" height="5" fill="#D8362B"/>
+      <!-- tay gần + kiện hàng -->
+      <rect x="46" y="-254" width="46" height="38" rx="2" fill="#C99A5B"/>
+      <path d="M46,-254 h46 v8 h-46 z" fill="#B58446"/>
+      <rect x="64" y="-254" width="10" height="38" fill="#E9D3A6"/>
+      <path d="M2,-236 L24,-210 L48,-218" stroke="#DBA20F" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M2,-236 L24,-210 L48,-218" stroke="#FFC530" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="52" cy="-218" r="9" fill="#F2C9A0"/>
+    </g>
+  </g>
+</svg>
