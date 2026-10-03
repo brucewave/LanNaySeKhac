@@ -183,7 +183,7 @@ rồi vào http://localhost:8123
 
 ## Kết có hậu & đồ ăn thừa — cutscenes.js, js/leftover.js
 - Cảnh `happy` (8,6 giây) chiếu trước bảng "Hết truyện": bình minh trên sông, dây cờ, cả nhà quanh xe trà đá cùng cả xóm (cô Lan, bác Tư, bác Ba, Tùng với con Cub, bà Năm, anh Lộc, bé Na, người bán ở chợ, chó mèo; ông lão mũ cối hiện mờ ở mép nước), mọi người nhún nhảy, vẫy tay, đèn ông sao và hoa giấy bay; câu "Lần này, đã khác.". Xem thử trong menu > Thử minigame / cảnh phim.
-- Chó mèo bên đường (`feed`): mèo ở Nhà cũ, Đường xóm, Bến sông, chó vàng ở chợ. Cho 1 bánh mì: lần đầu trong ngày được "lộc" (boa ×1,5); đủ 5 lần thì mèo về nhà (`S.flags.cat_home`, nằm cạnh chỗ đỗ xe, khách chờ lâu hơn ×1,2). Không có bánh mì thì chỉ vuốt.
+- Chó mèo bên đường (`feed`): mèo ở Nhà cũ, Đường xóm, Bến sông, chó vàng ở chợ. Cho 1 bánh mì: lần đầu trong ngày được "lộc" (boa ×1,5); mèo đủ 5 lần (`S.kind`) thì mèo mướp theo về (`S.flags.cat_home`, khách chờ lâu hơn ×1,2); chó vàng đếm riêng (`S.kindDog`), đủ 5 lần thì theo về (`S.flags.dog_home`, kẻ đuổi chậm 15%). Không có bánh mì thì chỉ vuốt.
 - Túi đồ > Ăn uống: bánh mì = đi nhanh hơn 15%; trà đá = khách chờ lâu hơn 25%; nước ngọt = mỗi khách boa thêm 1k (đều đến hết ngày, mỗi loại 1 lần/ngày). 19:30 còn đồ dễ hỏng thì nhắc.
 
 ## Máu, tinh thần, truy đuổi, chiếc rìu, Thiên Khí — js/rpg.js
@@ -194,3 +194,14 @@ rồi vào http://localhost:8123
 
 - Thanh bán hàng (sell.js `render`): thẻ món có giá, số còn, phím tắt, "HẾT"; món khách đang gọi sáng viền vàng; dòng "Khách gọi"; khay 4 ô; nút Giao sáng xanh khi khay đúng món; doanh thu + số khách bên phải.
 - Bảng Chơi thử có thêm mục Truy đuổi (`G.chase.test`): dựng đúng nơi/giờ, chạy xong trả lại nguyên trạng thái game.
+
+- Nút "Thử minigame / cảnh phim" ẩn trong bản cho khách. Mở lại bằng đường dẫn có `?dev` (ví dụ `index.html?dev`).
+
+- Khung game giãn ngang theo cửa sổ (`G.VIEW_W` 960–1200, cao 540) để màn hình rộng không còn dải đen. Tên game dùng font Grenze Gotisch (Google Fonts, có dấu tiếng Việt) + hiệu ứng lượn sóng, chập chờn, bóng ma đỏ. Xe hàng có dấu ! tới lần đầu đẩy xe. Bảng kết có credit "Một trò chơi của @aquaman793".
+
+## Album tem meme — js/stamps.js
+- Món mới **Kẹo dừa** (nhập 4k, bán 8k, để được lâu; học sinh và người già thích). Phím 4 khi bán.
+- Tem meme (`G.STAMPS`, `S.stamps`): ảnh làm thành con tem răng cưa, số thứ tự, dấu bưu điện, mệnh giá. Tem #01 "Tin vừa rồi có chính xác không chị" (ảnh `assets/stamps/keo-dua.jpg`): lần đầu nhập kẹo dừa. Tem #02 "Có làm thì mới có ăn" (`assets/stamps/co-lam.jpg`): bán hàng được tổng 500k (`S.stats.earned`), trao khi không đang bán. Tem #03 "Dân Chơi" (`assets/stamps/dan-choi.jpg`): có xe máy sau việc phụ của Tùng (`S.flags.xe`). Tem #04 "Còn cái nịt!" (`assets/stamps/con-cai-nit.jpg`): lần đầu bị quịt tiền. Tem #05 "Gud dual shhh" (`assets/stamps/gud-dual.jpg`): mua bán trà với bác Ba 3 lần (`S.flags.ba_deals`). Tem #06 "😧" (`assets/stamps/hoang-hon.jpg`): lần đầu bị hù (sau câu hoàn hồn). Tem #07 "👍" (`assets/stamps/thumb.jpg`): phá án xong, trao giữa cảnh kết và bảng "Hết truyện". Phần 1 album có 7 tem, đủ 7 là Meme Chúa (phần 2 thêm tem vào `G.STAMPS`).
+- Khách ngồi ăn trả tiền sau: nút "Thu …k" trên đầu khách hoặc nút Thu tiền (phím C) trên thanh bán; ăn xong chưa thu hoặc đóng sạp khi khách chưa trả là bị quịt (`P.r.quit`, `S.flags.bi_quit`). Album ở Túi đồ > ✉ Album tem meme; đủ cả album đạt **Meme Chúa** (huy hiệu ở màn hình tiêu đề). Thêm tem: thêm phần tử vào `G.STAMPS` rồi gọi `G.giveStamp(id)` ở chỗ muốn trao.
+
+- Mèo vẽ lại (`G.art.cat`, dùng cho mèo hoang ở decor.js, mèo theo người, cảnh kết). Mèo mướp đã thuần phục (`S.flags.cat_home`) đi theo người, có dáng ngồi (`G.art.cat`) và dáng đi bước chân chéo (`G.art.catWalk`), tự đổi khi đi/dừng, ở năm 2026 (năm 1996 ở lại), con mướp hoang ở Đường xóm biến mất. Chó vàng vẽ lại (`G.art.dog`), vẫy đuôi. Chó vàng đã thuần phục (`S.flags.dog_home`) cũng đi theo, xa hơn mèo một chút, dáng đi riêng (`G.art.dogWalk`: chân chéo, đuôi vẫy, lưỡi thè); con chó ở chợ biến mất. Follower chung trong leftover.js (`PET_DEF`).

@@ -47,6 +47,8 @@ var G = window.G || (window.G = {});
       return R(-10, -24, 20, 24, '#3F6650', ' rx="3"') + R(-12, -28, 24, 6, '#2C5449', ' rx="2"') + '<path d="M-4,-18 v12M4,-18 v12" stroke-width="1.2"/>';
     },
     cat: function (col) {
+      if (col === '#857761' && G.S && G.S.flags.cat_home) return ''; // mèo mướp đã theo mình về, không còn nằm ở đây
+      if (G.art.cat) return G.art.cat({ coat: col || '#4B5560', stripes: col === '#857761' }); // mèo vẽ chi tiết (leftover.js)
       return '<g class="breathe"><ellipse cx="0" cy="-6" rx="13" ry="7" fill="' + (col || '#4B5560') + '"/><circle cx="10" cy="-10" r="6" fill="' + (col || '#4B5560') + '"/>' +
         '<path d="M7,-15 l2,-5 l3,4 M12,-15 l2,-5 l2,5" fill="' + (col || '#4B5560') + '" stroke-width="1.5"/>' +
         '<path d="M9,-10 h3" stroke-width="1.2"/><path d="M-12,-4 q-6,4 2,6" fill="none" stroke-width="2"/></g>';

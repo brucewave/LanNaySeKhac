@@ -218,6 +218,7 @@ G.ui = {};
       '<div>Món đã bán: <b>' + r.items + '</b></div>' +
       '<div>Doanh thu: <b>' + r.earned + 'k</b> (tiền boa ' + r.tips + 'k)</div>' +
       '<div>Khách bỏ đi: <b>' + r.missed + '</b>' + (r.asked.length ? ' · Khách hỏi món không có: ' + r.asked.join(', ') : '') + '</div>' +
+      (r.quit ? '<div>Bị quịt: <b class="clue">' + r.quit + '</b> khách, mất ' + r.quitK + 'k (nhớ thu tiền khách ngồi ăn)</div>' : '') +
       '</div><button class="primary close">Tiếp tục</button>';
     openPanel('summary', h);
     $('summary').onclick = function (e) {
@@ -288,10 +289,10 @@ G.ui = {};
 
   G.ui.help = function (onClose) {
     var h = '<h2>Cách chơi</h2><div class="list help-list">' +
-      '<div>Bấm / chạm vào đâu thì đi tới đó; bấm vào người hay đồ vật để tương tác. Máy tính: WASD + E.</div>' +
-      '<div>Nhập hàng ở chỗ cô Lan (chợ), ra ô nét đứt để bày sạp bán kiếm tiền.</div>' +
-      '<div>Bản đồ góc trái mở dần theo nơi đã tới; có xe máy thì bấm ghim để đi nhanh.</div>' +
-      '<div>Nghe ngóng, ghi vào Sổ, đối chiếu lời khai với vật chứng. Phần còn lại, tự tìm hiểu nhé.</div>' +
+      '<div><b class="hl">Bấm / chạm</b> vào đâu thì đi tới đó; bấm vào <b class="hl">người hay đồ vật</b> để tương tác. Máy tính: <b class="hl">WASD + E</b>.</div>' +
+      '<div>Nhập hàng ở chỗ <b class="hl">cô Lan (chợ)</b>, đẩy xe hàng ở nhà ra <b class="hl">ô nét đứt</b> để bày sạp bán kiếm tiền.</div>' +
+      '<div><b class="hl">Bản đồ góc trái</b> mở dần theo nơi đã tới; có <b class="hl">xe máy</b> thì bấm ghim để đi nhanh.</div>' +
+      '<div>Nghe ngóng, ghi vào <b class="hl">Sổ</b>, <b class="clue">đối chiếu lời khai với vật chứng</b>. Phần còn lại, tự tìm hiểu nhé.</div>' +
       '</div><button class="primary close">Đã hiểu</button>';
     openPanel('help', h);
     $('help').onclick = function (e) {

@@ -5,11 +5,15 @@ var G = window.G || (window.G = {});
   var $ = function (id) { return document.getElementById(id); };
   G.isTouch = ('ontouchstart' in window) || window.matchMedia('(pointer:coarse)').matches;
 
-  // Co sân khấu 960x540 vừa cửa sổ
+  // Sân khấu cao 540, bề ngang giãn theo tỉ lệ cửa sổ (960–1200) để màn hình rộng không còn dải đen hai bên
   function fit() {
+    var ar = window.innerWidth / window.innerHeight;
+    G.VIEW_W = Math.round(Math.max(960, Math.min(1200, G.VIEW_H * ar)));
     var s = Math.min(window.innerWidth / G.VIEW_W, window.innerHeight / G.VIEW_H);
     var st = $('stage');
+    st.style.width = G.VIEW_W + 'px';
     st.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+    if (G.S && G.world && G.world.updateCamera && G.LOCATIONS[G.S.loc]) G.world.updateCamera(true);
   }
 
   G.start = function (S) {
@@ -64,12 +68,13 @@ var G = window.G || (window.G = {});
     if (m === 'notebook' && (e.code === 'KeyJ' || e.code === 'Escape')) { G.ui.close('notebook'); G.ui.hud(); return; }
     if (m) return;
     if (G.world.mode === 'sell') {
-      var n = { Digit1: 0, Digit2: 1, Digit3: 2, Numpad1: 0, Numpad2: 1, Numpad3: 2 }[e.code];
+      var n = { Digit1: 0, Digit2: 1, Digit3: 2, Digit4: 3, Numpad1: 0, Numpad2: 1, Numpad3: 2, Numpad4: 3 }[e.code];
       if (n !== undefined) G.sell.add(G.ITEM_ORDER[n]);
       else if (e.code === 'Space' || e.code === 'Enter') G.sell.serve();
       else if (e.code === 'Backspace') G.sell.clearTray();
       else if (e.code === 'KeyX') G.sell.decline();
       else if (e.code === 'KeyQ') G.sell.stop(false);
+      else if (e.code === 'KeyC') G.sell.collectAll();
       e.preventDefault();
       return;
     }

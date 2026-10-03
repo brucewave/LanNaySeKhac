@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Lần Này Sẽ Khác</title>
-<link rel="stylesheet" href="css/style.css?v=90">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=111">
 </head>
 <body>
 <!-- defs dùng chung cho mọi SVG trong trang (bộ lọc nét run tay, gradient) -->
@@ -28,6 +30,9 @@
     <pattern id="asph" width="60" height="40" patternUnits="userSpaceOnUse"><rect width="60" height="40" fill="#1A2028"/><circle cx="7" cy="9" r="1" fill="#252C36"/><circle cx="31" cy="23" r="1.3" fill="#141920"/><circle cx="48" cy="6" r="1" fill="#252C36"/><circle cx="19" cy="33" r="1.2" fill="#2A323D"/><circle cx="53" cy="30" r="1" fill="#141920"/><circle cx="40" cy="14" r=".8" fill="#2A323D"/></pattern>
     <radialGradient id="lampW"><stop offset="0" stop-color="#E2A050" stop-opacity=".45"/><stop offset="1" stop-color="#E2A050" stop-opacity="0"/></radialGradient>
     <radialGradient id="lamp"><stop offset="0" stop-color="#6F86A0" stop-opacity=".45"/><stop offset="1" stop-color="#6F86A0" stop-opacity="0"/></radialGradient>
+    <filter id="ghostwave" x="-10%" y="-30%" width="120%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.06" numOctaves="2" seed="7" result="n">
+      <animate attributeName="baseFrequency" values="0.012 0.06;0.016 0.09;0.012 0.06" dur="7s" repeatCount="indefinite"/></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter>
   </defs>
 </svg>
 
@@ -71,7 +76,7 @@
 
   <div id="title">
     <div id="title-art"></div>
-    <h1>Lần Này Sẽ Khác</h1>
+    <h1 data-text="Lần Này Sẽ Khác">Lần Này Sẽ Khác</h1>
     <p>Trinh thám kinh dị · một bến sông, năm 1996 và bây giờ</p>
     <button id="btn-continue" class="primary" hidden>Chơi tiếp</button>
     <button id="btn-new">Chơi mới</button>
@@ -80,44 +85,45 @@
 </div>
 <div id="rotate">Xoay ngang điện thoại để chơi</div>
 
-<script src="js/data.js?v=90"></script>
-<script src="js/text.js?v=90"></script>
-<script src="js/state.js?v=90"></script>
-<script src="js/art.js?v=90"></script>
-<script src="js/scenes.js?v=90"></script>
-<script src="js/clues.js?v=90"></script>
-<script src="js/dialogue.js?v=90"></script>
-<script src="js/ui.js?v=90"></script>
-<script src="js/notebook.js?v=90"></script>
-<script src="js/era96.js?v=90"></script>
-<script src="js/era96b.js?v=90"></script>
-<script src="js/npc.js?v=90"></script>
-<script src="js/path.js?v=90"></script>
-<script src="js/world.js?v=90"></script>
-<script src="js/sell.js?v=90"></script>
-<script src="js/ch2.js?v=90"></script>
-<script src="js/ch3.js?v=90"></script>
-<script src="js/ch4.js?v=90"></script>
-<script src="js/closeups.js?v=90"></script>
-<script src="js/final.js?v=90"></script>
-<script src="js/decor.js?v=90"></script>
-<script src="js/houses.js?v=90"></script>
-<script src="js/furniture.js?v=90"></script>
-<script src="js/looks.js?v=90"></script>
-<!-- <script src="js/memes.js?v=90"></script>  tạm tắt bộ meme -->
-<script src="js/qol.js?v=90"></script>
-<script src="js/scares.js?v=90"></script>
-<script src="js/cover.js?v=90"></script>
-<script src="js/details.js?v=90"></script>
-<script src="js/v3.js?v=90"></script>
-<script src="js/cutscenes.js?v=90"></script>
-<script src="js/minigames.js?v=90"></script>
-<script src="js/ambience.js?v=90"></script>
-<script src="js/ui2.js?v=90"></script>
-<script src="js/closeups2.js?v=90"></script>
-<script src="js/leftover.js?v=90"></script>
-<script src="js/rpg.js?v=90"></script>
-<script src="js/audio.js?v=90"></script>
-<script src="js/main.js?v=90"></script>
+<script src="js/data.js?v=111"></script>
+<script src="js/text.js?v=111"></script>
+<script src="js/state.js?v=111"></script>
+<script src="js/art.js?v=111"></script>
+<script src="js/scenes.js?v=111"></script>
+<script src="js/clues.js?v=111"></script>
+<script src="js/dialogue.js?v=111"></script>
+<script src="js/ui.js?v=111"></script>
+<script src="js/notebook.js?v=111"></script>
+<script src="js/era96.js?v=111"></script>
+<script src="js/era96b.js?v=111"></script>
+<script src="js/npc.js?v=111"></script>
+<script src="js/path.js?v=111"></script>
+<script src="js/world.js?v=111"></script>
+<script src="js/sell.js?v=111"></script>
+<script src="js/ch2.js?v=111"></script>
+<script src="js/ch3.js?v=111"></script>
+<script src="js/ch4.js?v=111"></script>
+<script src="js/closeups.js?v=111"></script>
+<script src="js/final.js?v=111"></script>
+<script src="js/decor.js?v=111"></script>
+<script src="js/houses.js?v=111"></script>
+<script src="js/furniture.js?v=111"></script>
+<script src="js/looks.js?v=111"></script>
+<!-- <script src="js/memes.js?v=111"></script>  tạm tắt bộ meme -->
+<script src="js/qol.js?v=111"></script>
+<script src="js/scares.js?v=111"></script>
+<script src="js/cover.js?v=111"></script>
+<script src="js/details.js?v=111"></script>
+<script src="js/v3.js?v=111"></script>
+<script src="js/cutscenes.js?v=111"></script>
+<script src="js/minigames.js?v=111"></script>
+<script src="js/ambience.js?v=111"></script>
+<script src="js/ui2.js?v=111"></script>
+<script src="js/closeups2.js?v=111"></script>
+<script src="js/leftover.js?v=111"></script>
+<script src="js/rpg.js?v=111"></script>
+<script src="js/stamps.js?v=111"></script>
+<script src="js/audio.js?v=111"></script>
+<script src="js/main.js?v=111"></script>
 </body>
 </html>

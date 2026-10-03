@@ -57,7 +57,7 @@ var G = window.G || (window.G = {});
     if (c.repath <= 0) { c.repath = 0.35; c.path = G.path.find(c.e.x, c.e.y, s.x, s.y); if (c.path) c.path.shift(); }
     var tx = s.x, ty = s.y;
     if (c.path && c.path.length) { tx = c.path[0].x; ty = c.path[0].y; if (Math.hypot(tx - c.e.x, ty - c.e.y) < 6) c.path.shift(); }
-    var dx = tx - c.e.x, dy = ty - c.e.y, d = Math.hypot(dx, dy), st = (cfg.speed || 185) * dt;
+    var dx = tx - c.e.x, dy = ty - c.e.y, d = Math.hypot(dx, dy), st = (cfg.speed || 185) * (G.S && G.S.flags.dog_home && !G.S.era ? 0.85 : 1) * dt; // chó sủa: kẻ đuổi chậm lại
     if (d > 1) { c.e.x += dx / d * Math.min(st, d); c.e.y += dy / d * Math.min(st, d); }
     var view = Math.abs(dx) > Math.abs(dy) ? 'side' : (dy > 0 ? 'front' : 'back');
     W.place(c.e, c.e.x, c.e.y, view, dx < 0 ? -1 : 1);

@@ -655,3 +655,97 @@ body.hitflash #tint { background: rgba(200,30,40,.45) !important; }
 #chasebar .lives { margin-left: 10px; font-style: normal; color: #FF8A92; letter-spacing: 2px; } #chasebar .lives s { color: #5A2A30; text-decoration: none; }
 #cut .cheer .chibi .ar2 { animation: cheerWave .45s ease-in-out infinite alternate !important; transform-origin: 100px 116px; }
 @keyframes cheerWave { from { transform: rotate(-150deg); } to { transform: rotate(-110deg); } }
+
+/* ---- Màn hình tiêu đề: font tên game, ba nút, credit ---- */
+#title h1 { font-family: "Grenze Gotisch", "Palatino Linotype", Georgia, serif; font-weight: 800; font-size: 64px; letter-spacing: 1px; line-height: 1;
+  color: #E8E2D2; text-shadow: 0 3px 0 #0B1018, 0 0 24px rgba(163,46,54,.45); }
+#title h1::after { height: 3px; width: 70%; margin-top: 10px; background: linear-gradient(90deg, #A32E36, rgba(163,46,54,0)); }
+#title p { font-size: 14px; letter-spacing: .3px; margin-bottom: 18px; }
+#title button { width: 280px; height: 50px; padding: 0 18px; gap: 14px; font-size: 16px; letter-spacing: .3px; border-radius: 10px;
+  background: linear-gradient(90deg, rgba(20,26,34,.92), rgba(20,26,34,.55)); border: 1px solid rgba(195,202,205,.18);
+  box-shadow: 0 6px 18px rgba(0,0,0,.35); backdrop-filter: blur(3px); transition: transform .15s, border-color .15s, background .15s, box-shadow .15s; }
+#title button .ci { width: 30px; height: 30px; border-radius: 50%; background: rgba(195,202,205,.1); flex: none; }
+#title button .ci .ic { width: 15px; height: 15px; }
+#title button:hover:not(:disabled) { transform: translateX(6px); border-color: rgba(226,217,168,.5); background: linear-gradient(90deg, rgba(36,44,56,.95), rgba(36,44,56,.6));
+  box-shadow: inset 3px 0 0 #A32E36, 0 8px 22px rgba(0,0,0,.45); }
+#title button.primary { background: linear-gradient(90deg, rgba(63,102,112,.95), rgba(63,102,112,.55)); border-color: rgba(143,196,206,.35); }
+#title button.primary .ci { background: rgba(255,255,255,.18); }
+#title button.primary:hover:not(:disabled) { background: linear-gradient(90deg, rgba(78,122,134,.98), rgba(78,122,134,.6)); }
+#title .music-toggle { width: 280px; height: 40px; font-size: 13px; border-radius: 20px; background: rgba(20,26,34,.55); }
+#title .music-toggle .ci { width: 24px; height: 24px; }
+#ending .credits { margin: 14px 0 4px; text-align: center; display: flex; flex-direction: column; gap: 2px; }
+#ending .credits span { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+#ending .credits b { font-family: "Grenze Gotisch", Georgia, serif; font-size: 30px; color: #E8E2D2; text-shadow: 0 0 14px rgba(163,46,54,.5); }
+#ending .credits small { color: var(--muted); }
+/* tên game ma mị: chữ lượn sóng như dưới nước, chập chờn như đèn hỏng, bóng ma đỏ trôi lệch */
+#title h1 { position: relative; filter: url(#ghostwave); animation: ttlFlicker 6s infinite; }
+#title h1::before { content: attr(data-text); position: absolute; left: 0; top: 0; color: #A32E36; opacity: .35; filter: blur(2px);
+  animation: ttlGhost 5s ease-in-out infinite; pointer-events: none; z-index: -1; }
+#title h1::after { animation: ttlLine 4s ease-in-out infinite; }
+@keyframes ttlFlicker { 0%, 18%, 22%, 61%, 63%, 100% { opacity: 1; } 19%, 21% { opacity: .35; } 62% { opacity: .6; } }
+@keyframes ttlGhost { 0%, 100% { transform: translate(3px, 2px); opacity: .3; } 45% { transform: translate(-5px, -1px); opacity: .5; } 50% { transform: translate(8px, 0); opacity: .15; } }
+@keyframes ttlLine { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+
+/* ---- Album tem meme ---- */
+.stamp { width: 150px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.stamp .stamp-in { position: relative; width: 150px; height: 104px; padding: 8px; background: #F2EEE2;
+  -webkit-mask: radial-gradient(circle 4px at 4px 4px, transparent 98%, #000) -4px -4px / 12px 12px;
+          mask: radial-gradient(circle 4px at 4px 4px, transparent 98%, #000) -4px -4px / 12px 12px; filter: drop-shadow(0 3px 4px rgba(0,0,0,.5)); }
+.stamp img { width: 100%; height: 100%; object-fit: cover; display: block; outline: 1.5px solid #8A7A5A; filter: sepia(.25) contrast(1.05); }
+.stamp .st-no { position: absolute; left: 12px; top: 10px; font: 800 11px/1 "Segoe UI", Arial; color: #F2EEE2; background: #A32E36; padding: 2px 5px; border-radius: 3px; }
+.stamp .st-val { position: absolute; right: 12px; bottom: 10px; font: 900 15px/1 "Grenze Gotisch", Georgia, serif; color: #F2EEE2; text-shadow: 0 1px 2px #000; }
+.stamp .st-mark { position: absolute; right: 6px; top: 6px; width: 54px; height: 54px; border: 2px solid rgba(40,50,90,.6); border-radius: 50%; color: rgba(40,50,90,.7);
+  font: 800 8px/1.25 "Segoe UI", Arial; display: flex; align-items: center; justify-content: center; text-align: center; transform: rotate(-14deg); }
+.stamp .st-cap { font-size: 12px; color: #E2D9A8; font-weight: 700; text-align: center; }
+.stamp.empty .stamp-in { background: #2B3138; } .stamp.empty .st-no { background: #4B5560; color: #C3CACD; }
+.stamp.empty .q { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 34px; color: #4B5560; font-weight: 900; }
+.stamp.empty .st-cap { color: #8C949B; font-weight: 400; font-size: 11px; }
+.album { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; justify-items: center; margin-bottom: 10px; }
+#stamp-pop { position: absolute; inset: 0; z-index: 58; background: rgba(5,8,12,.82); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; cursor: pointer; }
+#stamp-pop .sp-title { font: 800 30px/1 "Grenze Gotisch", Georgia, serif; color: #E8E2D2; text-shadow: 0 0 18px rgba(163,46,54,.6); }
+#stamp-pop .sp-sub { color: #8C949B; font-size: 13px; }
+.stamp.big { width: 360px; animation: stampSlam .5s cubic-bezier(.2,1.6,.4,1); } .stamp.big .stamp-in { width: 360px; height: 228px; padding: 14px; }
+.stamp.big .st-mark { width: 90px; height: 90px; font-size: 12px; } .stamp.big .st-cap { font-size: 18px; } .stamp.big .st-val { font-size: 24px; }
+@keyframes stampSlam { from { transform: scale(2.4) rotate(-12deg); opacity: 0; } 60% { transform: scale(.95) rotate(2deg); opacity: 1; } to { transform: scale(1) rotate(0); } }
+.meme-badge { position: absolute; right: 20px; top: 16px; z-index: 2; font: 900 14px "Grenze Gotisch", Georgia, serif; color: #E2C46A; border: 1.5px solid #E2C46A; border-radius: 6px; padding: 4px 10px; }
+/* răng cưa chỉ ở mép tem: nền là lưới lỗ tròn, lớp giấy đặc phủ phần giữa */
+.stamp .stamp-in { -webkit-mask: none; mask: none; background: radial-gradient(circle, transparent 3.6px, #F2EEE2 4.1px) -6px -6px / 12px 12px; }
+.stamp .stamp-in::before { content: ""; position: absolute; inset: 5px; background: #F2EEE2; }
+.stamp.empty .stamp-in { background: radial-gradient(circle, transparent 3.6px, #2B3138 4.1px) -6px -6px / 12px 12px; }
+.stamp.empty .stamp-in::before { background: #2B3138; }
+.stamp img, .stamp .st-no, .stamp .st-val, .stamp .st-mark, .stamp .q { position: relative; z-index: 1; }
+.stamp .st-no, .stamp .st-val, .stamp .st-mark, .stamp .q { position: absolute; z-index: 2; }
+/* khách ngồi ăn chưa trả: nút thu tiền trên đầu */
+.bubble .paybtn { pointer-events: auto; display: block; margin: 3px auto 0; padding: 2px 8px; font-size: 12px; font-weight: 800; color: #1B222C;
+  background: linear-gradient(180deg, #F2D27A, #C9A84A); border: 1.5px solid #0F141B; border-radius: 10px; cursor: pointer; animation: payPulse .8s ease-in-out infinite alternate; }
+@keyframes payPulse { to { transform: scale(1.08); } }
+#sellpanel .sp-pay { background: linear-gradient(180deg, #C9A84A, #9A7A2A); color: #1B222C; font-weight: 800; }
+/* chó vàng: vẫy đuôi, thỉnh thoảng nghiêng đầu */
+.dog .dog-tail { transform-box: fill-box; transform-origin: 0% 100%; animation: dogTail .35s ease-in-out infinite alternate; }
+.dog .dog-head { transform-box: fill-box; transform-origin: 80% 90%; animation: dogHead 4s ease-in-out infinite; }
+@keyframes dogTail { from { transform: rotate(-12deg); } to { transform: rotate(16deg); } }
+@keyframes dogHead { 0%, 70%, 100% { transform: rotate(0); } 78%, 90% { transform: rotate(-12deg); } }
+/* mèo: đuôi đung đưa, đầu thỉnh thoảng nghiêng; mèo đi theo thì nhún khi bước */
+.cat .cat-tail { transform-box: fill-box; transform-origin: 100% 100%; animation: catTail 1.6s ease-in-out infinite alternate; }
+.cat .cat-head { transform-box: fill-box; transform-origin: 50% 90%; animation: dogHead 5s ease-in-out infinite; animation-delay: -2s; }
+@keyframes catTail { from { transform: rotate(-8deg); } to { transform: rotate(10deg); } }
+.ent.pet .fl svg { transition: transform .1s; }
+.ent.pet.walk .cat { animation: petHop .28s ease-in-out infinite alternate; }
+@keyframes petHop { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+/* mèo đi theo: đứng yên thì ngồi, đi thì đổi sang dáng bước, chân chéo đánh ngược nhau */
+.ent.pet .pet-walk { display: none; } .ent.pet.walk .pet-walk { display: block; } .ent.pet.walk .pet-sit { display: none; }
+.cat.walking .lg-a, .cat.walking .lg-b { transform-box: fill-box; transform-origin: 50% 0%; }
+.ent.pet.walk .cat.walking .lg-a { animation: catStep .3s ease-in-out infinite alternate; }
+.ent.pet.walk .cat.walking .lg-b { animation: catStep .3s ease-in-out infinite alternate-reverse; }
+@keyframes catStep { from { transform: rotate(-28deg); } to { transform: rotate(28deg); } }
+.ent.pet.walk .cat.walking { animation: petHop .15s ease-in-out infinite alternate; }
+.ent.pet.walk .cat.walking .cat-tail { animation: catTail .3s ease-in-out infinite alternate; }
+
+/* chó đi theo: chân bước chéo, đuôi vẫy, thân nhún */
+.dog.walking .lg-a, .dog.walking .lg-b { transform-box: fill-box; transform-origin: 50% 0%; }
+.ent.pet.walk .dog.walking .lg-a { animation: catStep .26s ease-in-out infinite alternate; }
+.ent.pet.walk .dog.walking .lg-b { animation: catStep .26s ease-in-out infinite alternate-reverse; }
+.ent.pet.walk .dog.walking { animation: petHop .13s ease-in-out infinite alternate; }
+.dog.walking .dog-tail { transform-box: fill-box; transform-origin: 100% 100%; }
+.ent.pet.walk .dog.walking .dog-tail { animation: dogWag .18s ease-in-out infinite alternate; }
+@keyframes dogWag { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }

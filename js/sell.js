@@ -82,7 +82,7 @@ G.sell = { active: false };
 
   P.stop = function (silent) {
     var S = G.S;
-    P.customers.forEach(function (c) { if (c.npc) releaseNpc(c); });
+    P.customers.forEach(function (c) { if (c.npc) releaseNpc(c); if (c.owe) quit(c); });
     (P.seatEls || []).forEach(function (el) { el.remove(); }); P.seatEls = []; P.seats = [];
     G.world.zoom = 1.25;
     P.tray.forEach(function (id) { S.stock[id]++; });
@@ -144,6 +144,9 @@ G.sell = { active: false };
     P.customers.push(c);
   }
 
+  var QUIT = ['Quên ví ở nhà… chạy!', 'Ghi sổ nhé!', 'Mai trả!', 'Chuồn thôi!'];
+  function rnd(a) { return a[Math.floor(Math.random() * a.length)]; }
+  P.cidN = 0;
   function waitingList() { return P.customers.filter(function (c) { return c.state === 'in' || c.state === 'wait'; }); }
   P.queue = waitingList;
   function front() { var w = waitingList(); return w[0] && w[0].state === 'wait' ? w[0] : null; }
@@ -196,9 +199,9 @@ G.sell = { active: false };
       } else if (c.state === 'eat') {
         c.eatT -= dt;
         if (!c.chatted && c.eatT < 3 && G.THANK_LINES && Math.random() < 0.02) { c.chatted = true; c.say = G.THANK_LINES[Math.floor(Math.random() * G.THANK_LINES.length)]; c.sayT = 1.8; }
-        if (c.eatT <= 0) { c.state = 'out2'; c.seat.used = null; c.e.el.classList.remove('sitting'); }
+        if (c.eatT <= 0) { if (c.owe) quit(c, rnd(QUIT)); c.state = 'out2'; c.seat.used = null; c.e.el.classList.remove('sitting'); render(); }
       } else if (c.state === 'out2') { // ăn xong, đi về phía trái
-        c.e.x -= WALK * dt;
+        c.e.x -= WALK * (c.run ? 1.9 : 1) * dt; // kẻ quịt thì chạy biến
         c.e.el.classList.add('walk');
         G.world.place(c.e, c.e.x, c.e.y, 'side', -1);
         if (c.e.x < G.world.camX - 80) { c.e.el.remove(); P.customers.splice(P.customers.indexOf(c), 1); }
@@ -216,7 +219,8 @@ G.sell = { active: false };
       drawBubble(c, idx === 0 && c.state === 'wait');
     });
 
-    var fw = frontWant(); if ((fw ? fw.join(',') : '') !== P._wantKey) render();
+    var fw = frontWant(), uk = P.unpaid().map(function (c) { return c.cid + ':' + c.owe; }).join(',');
+    if ((fw ? fw.join(',') : '') !== P._wantKey || uk !== P._oweKey) { P._oweKey = uk; render(); }
     if (!P.stockWarned && G.stockTotal(S) === 0 && P.tray.length === 0) {
       P.stockWarned = true;
       G.ui.toast('Hết sạch hàng. Bấm "Đóng sạp" để dọn về.');
@@ -227,7 +231,8 @@ G.sell = { active: false };
   function drawBubble(c, isFront) {
     var h;
     if (c.say) h = '<div class="say">' + c.say + '</div>';
-    else if (c.state === 'eat') h = '<div class="want eating">' + (c.ate || []).map(function (id) { return G.art.icon(id); }).join('') + '</div>';
+    else if (c.state === 'eat') h = '<div class="want eating">' + (c.ate || []).map(function (id) { return G.art.icon(id); }).join('') + '</div>' +
+      (c.owe ? '<button class="paybtn" data-cid="' + c.cid + '">Thu ' + c.owe + 'k</button>' : '');
     else if (c.state === 'out' || c.state === 'out2' || c.state === 'toSeat') h = '';
     else {
       h = '<div class="want">' + c.want.map(function (id) { return G.art.icon(id); }).join('') + '</div>' +
@@ -275,9 +280,11 @@ G.sell = { active: false };
     got.forEach(function (id) { pay += G.ITEMS[id].price; });
     var tip = !partial && c.pat / c.max > 0.5 ? Math.round(c.want.length * P.L.sell.tipMul) : 0;
     if (G.tipAdj && !partial) tip = G.tipAdj(tip); // có lộc (cho chó mèo ăn), ngọt giọng (nước ngọt)
-    S.money += pay + tip;
-    S.stats.sold += got.length; S.stats.earned += pay + tip;
-    P.r.served++; P.r.items += got.length; P.r.earned += pay + tip; P.r.tips += tip;
+    var free = (P.seats || []).filter(function (st) { return !st.used; });
+    var sit = !c.npc && free.length && Math.random() < 0.55; // ra ghế ngồi ăn: ăn xong mới trả tiền
+    S.stats.sold += got.length; P.r.served++; P.r.items += got.length;
+    if (sit) { c.owe = pay + tip; c.tip = tip; }
+    else { S.money += pay + tip; S.stats.earned += pay + tip; P.r.earned += pay + tip; P.r.tips += tip; }
     P.tray = [];
     if (c.npc === 'bac_ba') {
       S.daily['ba_buy_' + S.loc] = 1;
@@ -285,16 +292,34 @@ G.sell = { active: false };
       G.ui.toast('Bác Ba uống một ly, ly kia đặt cạnh chân không đụng tới.', 3500);
     }
     var thank = !partial && G.THANK_LINES && Math.random() < 0.5 ? G.THANK_LINES[Math.floor(Math.random() * G.THANK_LINES.length)] + ' ' : '';
-    leave(c, thank + (partial ? 'Thiếu món thì lấy chừng này. ' : '') + '+' + (pay + tip) + 'k' + (tip ? ' (boa ' + tip + 'k)' : ''));
-    var free = (P.seats || []).filter(function (st) { return !st.used; });
-    if (!c.npc && free.length && Math.random() < 0.55) { // ra ghế ngồi ăn uống
+    if (sit) {
+      leave(c, (partial ? 'Thiếu món thì lấy chừng này. ' : '') + 'Ăn xong trả tiền nhé!');
       var seat = free[Math.floor(Math.random() * free.length)];
-      seat.used = c; c.seat = seat; c.state = 'toSeat'; c.ate = got.slice();
-    }
+      seat.used = c; c.seat = seat; c.state = 'toSeat'; c.ate = got.slice(); c.cid = ++P.cidN;
+    } else leave(c, thank + (partial ? 'Thiếu món thì lấy chừng này. ' : '') + '+' + (pay + tip) + 'k' + (tip ? ' (boa ' + tip + 'k)' : ''));
     if (c.npc) { S.daily[buyKey(c.npc)] = 1; if (G.NPCS[c.npc].onServed) G.NPCS[c.npc].onServed(S); }
     render();
     G.ui.hud();
   };
+  P.collect = function (c) {
+    var S = G.S;
+    if (!c || !c.owe) return 0;
+    var v = c.owe; c.owe = 0;
+    S.money += v; S.stats.earned += v; P.r.earned += v; P.r.tips += c.tip || 0;
+    c.say = '+' + v + 'k' + (c.tip ? ' (boa ' + c.tip + 'k)' : ''); c.sayT = 1.6;
+    if (G.audio && G.audio.sfx) G.audio.sfx('coin');
+    render(); G.ui.hud();
+    return v;
+  };
+  P.unpaid = function () { return P.customers.filter(function (c) { return c.owe > 0 && (c.state === 'toSeat' || c.state === 'eat'); }); };
+  P.collectAll = function () { var n = 0; P.unpaid().forEach(function (c) { n += P.collect(c); }); return n; };
+  function quit(c, why) { // khách chuồn không trả tiền
+    var S = G.S, v = c.owe || 0;
+    if (!v) return;
+    c.owe = 0; c.run = true; P.r.quit = (P.r.quit || 0) + 1; P.r.quitK = (P.r.quitK || 0) + v;
+    S.stats.quit = (S.stats.quit || 0) + 1; S.flags.bi_quit = true;
+    c.say = why || 'Chuồn thôi!'; c.sayT = 1.8;
+  }
   P.decline = function () {
     var c = front();
     if (!c) return;
@@ -325,7 +350,8 @@ G.sell = { active: false };
     for (var k = 0; k < 4; k++) h += '<span class="slot' + (P.tray[k] ? ' full' : '') + '">' + (P.tray[k] ? G.art.icon(P.tray[k]) : '') + '</span>';
     h += '</div><button class="sp-clear" data-a="clear"' + (P.tray.length ? '' : ' disabled') + '>Bỏ khay</button>' +
       '<button class="primary sp-serve' + (trayOk() ? ' ready' : '') + '" data-a="serve">Giao <kbd>Space</kbd></button></div></div>';
-    h += '<div class="sp-side"><div id="sellstats"></div><button data-a="decline">Hết món <kbd>X</kbd></button><button class="danger" data-a="close">Đóng sạp <kbd>Q</kbd></button></div>';
+    var up = P.unpaid ? P.unpaid() : [], owe = up.reduce(function (a, c) { return a + c.owe; }, 0);
+    h += '<div class="sp-side"><div id="sellstats"></div>' + (up.length ? '<button class="sp-pay" data-a="collect">Thu tiền ' + owe + 'k <kbd>C</kbd></button>' : '') + '<button data-a="decline">Hết món <kbd>X</kbd></button><button class="danger" data-a="close">Đóng sạp <kbd>Q</kbd></button></div>';
     $('sellpanel').innerHTML = h;
     P._wantKey = want.join(',');
     renderStats();
@@ -350,6 +376,14 @@ G.sell = { active: false };
       else if (a === 'serve') P.serve();
       else if (a === 'decline') P.decline();
       else if (a === 'close') P.stop(false);
+      else if (a === 'collect') P.collectAll();
+    });
+    // bấm nút "Thu …k" trên đầu khách đang ngồi ăn
+    $('ents').addEventListener('click', function (e) {
+      var b = e.target.closest('.paybtn'); if (!b || !P.active) return;
+      e.stopPropagation();
+      var c = P.customers.filter(function (x) { return x.cid === +b.dataset.cid; })[0];
+      P.collect(c);
     });
   });
 })();

@@ -5,6 +5,7 @@ var G = window.G || (window.G = {});
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var W = G.world;
+  G.DEV = location.search.indexOf('dev') >= 0; // chế độ nhà phát triển: thêm ?dev vào đường dẫn
   function rnd(a) { return a[Math.floor(Math.random() * a.length)]; }
 
   // ======================= HẾT CHƯƠNG: CHƠI TIẾP LUÔN =======================
@@ -28,13 +29,14 @@ var G = window.G || (window.G = {});
   // ======================= XE ĐẨY: LẤY Ở NHÀ MỚI BÁN ĐƯỢC =======================
   G.LOCATIONS.nha.things.push({ id: 'xe_day', x: 700, y: 566, hit: [640, 452, 120, 82], act: 'cart_take',
     label: function (S) { return S.cartOut ? 'Cất xe đẩy vào nhà' : 'Đẩy xe hàng đi'; },
-    cond: function (S) { return !S.era && W.mode === 'walk'; } });
+    cond: function (S) { return !S.era && W.mode === 'walk'; },
+    quest: function (S) { return !S.flags.cart_first && !S.cartOut; } }); // dấu ! tới lần đầu đẩy xe: nhớ mang xe đi nhập hàng
   G.acts = G.acts || {};
   G.acts.cart_take = function () {
     var S = G.S;
     if (!S.cartOut) {
       if (S.riding) { S.riding = false; if (G.syncBike) G.syncBike(); }
-      S.cartOut = true;
+      S.cartOut = true; S.flags.cart_first = true;
       cartFollow(true);
       G.ui.toast('Đã đẩy xe hàng ra. Tới ô nét đứt ở chợ hoặc bến sông để bày sạp.');
     } else {
@@ -134,6 +136,7 @@ var G = window.G || (window.G = {});
     b.textContent = 'Chế độ: ' + G.MODES[S.mode || 'easy'];
     b.onclick = function (e) { e.stopPropagation(); S.mode = S.mode === 'detective' ? 'easy' : 'detective'; b.textContent = 'Chế độ: ' + G.MODES[S.mode]; applyMode(); };
     list.insertBefore(b, list.querySelector('[data-m="help"]'));
+    if (!G.DEV) return; // bản cho khách chơi: ẩn nút chơi thử (mở lại bằng đường dẫn có ?dev)
     var tb = document.createElement('button');
     tb.textContent = 'Thử minigame / cảnh phim';
     tb.onclick = function (e) { e.stopPropagation(); G.ui.close('menu'); testPanel(); };

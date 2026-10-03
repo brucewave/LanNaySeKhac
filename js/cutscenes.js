@@ -166,8 +166,8 @@ var G = window.G || (window.G = {});
     t += person(meSelf, 270, 198, 1.12, 1.3, true);
     t += person(vy, 590, 205, 1.08, 0.9, true);
     t += person(L('be_na', { hair: 'long', shirt: '#948C5E', kid: true, prop: 'balloon' }), 160, 228, 0.95, 2.5, true);
-    t += '<g opacity="0"><g transform="translate(220,420)"><ellipse cx="0" cy="0" rx="22" ry="9" fill="#857761" stroke="' + INK + '" stroke-width="2.5"/><circle cx="18" cy="-8" r="9" fill="#857761" stroke="' + INK + '" stroke-width="2.5"/><path d="M12,-15 l2,-7 l4,5 M20,-16 l4,-6 l2,7" fill="#857761" stroke="' + INK + '" stroke-width="2"/><path d="M-22,0 q-14,-4 -10,-16" fill="none" stroke="' + INK + '" stroke-width="3"/></g><animate attributeName="opacity" values="0;1" begin="3s" dur="0.6s" fill="freeze"/></g>';
-    t += '<g opacity="0"><g transform="translate(720,424)"><ellipse cx="0" cy="0" rx="24" ry="10" fill="#B8904A" stroke="' + INK + '" stroke-width="2.5"/><circle cx="22" cy="-8" r="10" fill="#B8904A" stroke="' + INK + '" stroke-width="2.5"/><path d="M16,-14 l-3,-8 l6,4 M26,-16 l4,-7 l1,8" fill="#8A6A34" stroke="' + INK + '" stroke-width="2"/><path d="M-24,-2 q-10,-8 -6,-18" fill="none" stroke="' + INK + '" stroke-width="3">' + animT('rotate', '-10 -24 -2;14 -24 -2;-10 -24 -2', 3.2, 0.4, ' repeatCount="indefinite"') + '</path></g><animate attributeName="opacity" values="0;1" begin="3.1s" dur="0.6s" fill="freeze"/></g>'; // chó vẫy đuôi
+    t += '<g opacity="0"><g transform="translate(220,424) scale(1.6)">' + G.art.cat({ coat: '#857761', stripes: true, light: '#D8C8A8' }) + '</g><animate attributeName="opacity" values="0;1" begin="3s" dur="0.6s" fill="freeze"/></g>'; // mèo mướp
+    t += '<g opacity="0"><g transform="translate(730,430) scale(1.5,1.5) scale(-1,1)">' + G.art.dog() + '</g><animate attributeName="opacity" values="0;1" begin="3.1s" dur="0.6s" fill="freeze"/></g>'; // chó vàng vẫy đuôi
     // đèn ông sao + hoa giấy bay lên
     for (var s = 0; s < 6; s++) { var sx = 90 + s * 160, star = ''; for (var k = 0; k < 10; k++) { var a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? 5 : 12; star += (k ? 'L' : 'M') + (sx + Math.cos(a) * rr).toFixed(1) + ',' + (470 + Math.sin(a) * rr).toFixed(1); }
       t += '<path d="' + star + 'z" fill="' + (s % 2 ? '#E2C040' : '#C83A3A') + '" stroke="' + INK + '" stroke-width="1.5" opacity="0">' + animT('translate', '0,0;' + (s % 2 ? 30 : -30) + ',-460', 3.4 + s * 0.3, 5) + '<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.8;1" begin="' + (3.4 + s * 0.3) + 's" dur="5s" fill="freeze"/></path>'; }
@@ -221,5 +221,17 @@ var G = window.G || (window.G = {});
   G.CUT_SCENES = SCENES;
   // kết truyện: chiếu cảnh có hậu trước bảng "Hết truyện"
   var theEnd0 = G.ui.theEnd;
-  if (theEnd0) G.ui.theEnd = function () { var self = this, args = arguments; G.cutscene('happy', function () { theEnd0.apply(self, args); }); };
+  if (theEnd0) G.ui.theEnd = function () {
+    var self = this, args = arguments;
+    G.cutscene('happy', function () { if (G.giveStampThen) G.giveStampThen('thumb', showEnd); else showEnd(); }); // tem cuối "👍" rồi mới hiện bảng kết
+    function showEnd() {
+      theEnd0.apply(self, args);
+      var p = document.getElementById('ending'); // after-credit: tên tác giả
+      if (p && !p.querySelector('.credits')) {
+        var c = document.createElement('div'); c.className = 'credits';
+        c.innerHTML = '<span>Một trò chơi của</span><b>@aquaman793</b><small>Cảm ơn bạn đã chơi đến cuối.</small>';
+        var list = p.querySelector('.list:last-child'); if (list) p.insertBefore(c, list); else p.appendChild(c);
+      }
+    }
+  };
 })();

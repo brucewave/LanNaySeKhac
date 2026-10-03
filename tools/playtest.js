@@ -134,6 +134,7 @@
     var stats = { served: 0, earn0: S().money, start: S().min }, waitT = 0;
     while (W.mode === 'sell' && S().min < untilMin && G.stockTotal(S()) + G.sell.tray.length > 0) {
       if (!frame()) { await settle(); continue; }
+      if (G.sell.collectAll) G.sell.collectAll(); // thu tiền khách ngồi ăn
       var f = G.sell.queue()[0];
       if (f && f.state === 'wait') {
         waitT += 1 / 60;
