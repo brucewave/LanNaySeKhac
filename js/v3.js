@@ -116,11 +116,12 @@ var G = window.G || (window.G = {});
     if (t.querySelector('.mode-pick')) return;
     var box = document.createElement('div');
     box.className = 'mode-pick';
-    box.innerHTML = '<button class="primary" data-m="easy"><b>Chế độ dễ</b><small>Chữ quan trọng tô màu, dấu ! chỉ người và chỗ cần tới</small></button>' +
+    btnNew.hidden = true; // thay nút "Chơi mới" bằng hai thẻ chọn chế độ
+    box.innerHTML = '<div class="mp-title">Chọn cách chơi</div><button class="primary" data-m="easy"><b>Chế độ dễ</b><small>Chữ quan trọng tô màu, dấu ! chỉ người và chỗ cần tới</small></button>' +
       '<button data-m="detective"><b>Chế độ thám tử</b><small>Không gợi ý: không dấu !, không tô màu chữ. Tự nghe, tự nhớ</small></button>';
     box.onclick = function (e) {
       var b = e.target.closest('button'); if (!b) return;
-      G.pendingMode = b.dataset.m; box.remove();
+      G.pendingMode = b.dataset.m; box.remove(); btnNew.hidden = false;
       G.start(null); applyMode();
     };
     btnNew.after(box);

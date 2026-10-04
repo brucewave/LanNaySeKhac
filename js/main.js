@@ -13,6 +13,7 @@ var G = window.G || (window.G = {});
     if (G.portrait) { G.VIEW_W = 540; G.VIEW_H = Math.round(Math.max(760, Math.min(1240, 540 / ar))); }
     else { G.VIEW_H = 540; G.VIEW_W = Math.round(Math.max(960, Math.min(1200, G.VIEW_H * ar))); }
     document.body.classList.toggle('portrait', G.portrait);
+    if (G.coverFit) G.coverFit();
     if (G.world && G.world.mode !== 'sell') G.world.zoom = G.world.baseZoom();
     var s = Math.min(window.innerWidth / G.VIEW_W, window.innerHeight / G.VIEW_H);
     var st = $('stage');

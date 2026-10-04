@@ -12,8 +12,8 @@ rồi vào http://localhost:8123
 ## Điều khiển
 - Bấm / chạm vào cảnh: nhân vật tự tìm đường tới đó. Bấm vào người hoặc đồ vật thì đi lại rồi tương tác. Bấm sát mép để sang cảnh bên.
 - Máy tính: WASD hoặc phím mũi tên đi 8 hướng · E/Space tương tác · Esc menu · J sổ điều tra · I túi đồ · 1/2 chọn trong hội thoại. Khi bán: 1/2/3 chọn món, Space giao, Backspace bỏ khay, X từ chối, Q đóng sạp.
-- Điện thoại xoay ngang: chạm và kéo nửa trái màn hình để đi (cần điều khiển ảo), nút tương tác bên phải, ☰ menu, bấm trực tiếp khi bán.
-- Điện thoại cầm dọc (`body.portrait`, tự bật khi màn cao hơn rộng): sân khấu ngang 540, cao theo máy (760–1240). Cảnh ở trên (zoom `G.world.baseZoom()`), bàn điều khiển cao `G.DECK` = 290 ở dưới: dòng ngày / giờ / tiền, cần điều khiển, nút tương tác; hội thoại và thanh bán hàng (2 tầng) nằm trong bàn điều khiển. Cảnh phim hiện khung ngang ở giữa. Đang mở bảng thì ẩn cần điều khiển (`body.busy`).
+- Điện thoại: không có cần điều khiển, chạm vào đâu thì đi tới đó, chạm người / đồ vật để tương tác; nút tương tác tròn bên phải; ☰ menu; bấm trực tiếp khi bán. Màn dọc có ảnh bìa riêng (`G.coverFit`: cắt dải giữa ảnh bìa, nới trời phía trên cho tên game và nút).
+- Điện thoại cầm dọc (`body.portrait`, tự bật khi màn cao hơn rộng): sân khấu ngang 540, cao theo máy (760–1240). Cảnh ở trên (zoom `G.world.baseZoom()`), cảnh phủ kín màn hình, dòng ngày / giờ / tiền và nút tương tác nổi trên cảnh; hội thoại và thanh bán hàng (2 tầng) nằm trong bàn điều khiển. Cảnh phim hiện khung ngang ở giữa. Đang mở bảng thì ẩn cần điều khiển (`body.busy`).
 - Đồ hoạ Mượt (`js/perf.js`, `body.lite`, mặc định bật trên máy cảm ứng, đổi trong menu > Đồ hoạ): tắt nét run tay (feTurbulence) trên nhân vật, đứng yên hiệu ứng trong ảnh nền / đồ vật, bỏ sương / lá / thiêu thân, lớp tối ban đêm vẽ nửa độ phân giải và 8 lần/giây khi đi, bỏ bụi chân. Mọi máy: HUD ghi 5 lần/giây và chỉ khi chữ đổi, lớp màu trời chỉ ghi khi đổi.
 
 ## Đã có (bước 1–2 của đặc tả)

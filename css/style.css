@@ -773,7 +773,6 @@ body.portrait #title { padding-left: 0; align-items: center; justify-content: fl
 body.portrait #title h1 { font-size: 70px; }
 body.portrait #title h1::after { margin-left: auto !important; margin-right: auto; background: linear-gradient(90deg, rgba(163,46,54,0), #A32E36, rgba(163,46,54,0)); }
 body.portrait #title p { max-width: 420px; }
-body.portrait #title button { width: 340px; height: 60px; font-size: 18px; }
 body.portrait #title .music-toggle { width: 340px; height: 46px; }
 /* màn dọc: nút HUD ở góc trên phải, thông tin ngày / giờ / tiền ở mép trên bàn điều khiển */
 body.portrait #hud { right: 8px; }
@@ -811,3 +810,76 @@ body.portrait #hud .hud-info { bottom: 236px; }
 body.portrait #dialog:not(.talk-bubble) { top: 50%; bottom: auto; transform: translateY(-50%); max-height: 60%; }
 /* màn dọc: bản đồ nhỏ, mục tiêu và nút HUD to hơn 10% cho dễ bấm */
 body.portrait #minimap, body.portrait #objective, body.portrait #hud > button { zoom: 1.1; }
+
+/* điện thoại: bỏ cần điều khiển, chạm vào đâu thì đi tới đó (chạm người / đồ vật để tương tác) */
+body.touch #joyzone, body.touch #joy { display: none; }
+/* màn vào game trên màn dọc */
+body.portrait #cover .cv-left { display: none; }
+body.portrait #title { padding-top: 96px; gap: 14px; }
+body.portrait #title h1 { font-size: 76px; line-height: .95; text-shadow: 0 3px 0 #0B1018, 0 0 30px rgba(163,46,54,.55); }
+body.portrait #title p { font-size: 16px; max-width: 500px; margin-bottom: 26px; color: #A8B0B6; white-space: nowrap; }
+body.portrait #title .music-toggle { width: 380px; height: 52px; font-size: 16px; border-radius: 26px; }
+body.portrait #title button .ci { width: 38px; height: 38px; }
+body.portrait #title button:hover:not(:disabled) { transform: none; }
+
+/* ---------- nút tương tác (điện thoại) ---------- */
+#btn-act, body.portrait #btn-act { min-width: 0; height: auto; padding: 8px; border-radius: 999px; display: flex; align-items: center; gap: 12px; opacity: 1;
+  background: rgba(15,20,27,.62); border: 1.5px solid rgba(195,202,205,.22); box-shadow: 0 6px 18px rgba(0,0,0,.45); color: #C3CACD;
+  backdrop-filter: blur(2px); transition: background .2s, border-color .2s, transform .1s; max-width: 340px; }
+#btn-act .ab-ic { width: 52px; height: 52px; flex: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(195,202,205,.1); }
+#btn-act .ab-ic .ic { width: 26px; height: 26px; }
+#btn-act:not(.ready) { opacity: .55; }
+#btn-act.ready { background: linear-gradient(180deg, rgba(36,48,58,.95), rgba(20,28,36,.95)); border-color: rgba(226,196,106,.75); padding-right: 22px;
+  box-shadow: 0 0 0 3px rgba(226,196,106,.18), 0 8px 22px rgba(0,0,0,.5); animation: abIn .25s ease-out; }
+#btn-act.ready .ab-ic { background: radial-gradient(circle at 40% 35%, #F2D98A, #C9A84A); color: #1B222C; box-shadow: 0 0 14px rgba(226,196,106,.55); animation: abPulse 1.4s ease-in-out infinite; }
+#btn-act .ab-lbl { font-weight: 800; font-size: 17px; color: #F2EDE0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .2px; }
+#btn-act:active { transform: scale(.95); }
+@keyframes abIn { from { transform: scale(.85); opacity: .4; } }
+@keyframes abPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(226,196,106,.5); } 50% { box-shadow: 0 0 0 8px rgba(226,196,106,0); } }
+body.portrait #btn-act { bottom: 72px; right: 22px; }
+body.portrait #btn-act .ab-ic { width: 66px; height: 66px; }
+body.portrait #btn-act .ab-ic .ic { width: 32px; height: 32px; }
+body.portrait #btn-act .ab-lbl { font-size: 20px; }
+body.portrait #btn-act { max-width: 440px; }
+body.lite #btn-act { backdrop-filter: none; }
+
+/* ---------- nút màn hình vào game: viên thuốc dày kiểu game, tông kinh dị (máu đỏ, viền mực, giọt máu nhỏ xuống) ---------- */
+#title button:not(.music-toggle) { position: relative; width: 300px; height: 64px; padding: 0 22px 0 14px; gap: 14px; border-radius: 999px;
+  border: 3px solid #0F141B; color: #F4E9D8; font: 800 27px/1 "Grenze Gotisch", Georgia, serif; letter-spacing: .5px; text-shadow: 0 2px 0 #3A0D12, 0 0 10px rgba(0,0,0,.4);
+  background: linear-gradient(180deg, #C2414A 0%, #A32E36 45%, #7A1E25 100%);
+  box-shadow: inset 0 -5px 0 rgba(0,0,0,.28), inset 0 2px 0 rgba(255,255,255,.18), 0 6px 0 #0F141B, 0 10px 24px rgba(0,0,0,.6), 0 0 26px rgba(163,46,54,.35);
+  transform: none; transition: filter .15s, box-shadow .15s; overflow: visible; backdrop-filter: none; }
+#title button:not(.music-toggle)::before { content: ""; position: absolute; left: 22px; right: 22px; top: 5px; height: 12px; border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,0)); pointer-events: none; }
+#title button:not(.music-toggle)::after { content: ""; position: absolute; left: 30px; right: 30px; bottom: -22px; height: 24px; pointer-events: none; z-index: -1;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 26' preserveAspectRatio='none'><path d='M0,0 H200 V4 q-6,0 -7,6 q-1,10 -4,10 q-3,0 -3,-9 q0,-6 -6,-6 H148 q-5,0 -5,7 q0,15 -4,15 q-4,0 -4,-14 q0,-8 -6,-8 H96 q-5,0 -6,5 q-1,7 -3,7 q-3,0 -3,-7 q0,-5 -6,-5 H44 q-6,0 -6,8 q0,12 -4,12 q-4,0 -4,-12 q0,-8 -6,-8 H0 z' fill='%236E1A20' stroke='%230F141B' stroke-width='2.5'/></svg>") center top / 100% 100% no-repeat; }
+#title button:not(.music-toggle) .ci { width: 38px; height: 38px; border-radius: 50%; background: #0F141B; color: #E8C9A0; box-shadow: inset 0 0 0 2px rgba(232,201,160,.25); }
+#title button:not(.music-toggle) .ci .ic { width: 17px; height: 17px; }
+#title button:not(.music-toggle):hover:not(:disabled) { transform: none; filter: brightness(1.12); background: linear-gradient(180deg, #C2414A 0%, #A32E36 45%, #7A1E25 100%);
+  box-shadow: inset 0 -5px 0 rgba(0,0,0,.28), inset 0 2px 0 rgba(255,255,255,.18), 0 6px 0 #0F141B, 0 10px 24px rgba(0,0,0,.6), 0 0 34px rgba(163,46,54,.6); }
+#title button:not(.music-toggle):active:not(:disabled) { transform: translateY(4px); box-shadow: inset 0 -3px 0 rgba(0,0,0,.28), 0 2px 0 #0F141B, 0 4px 12px rgba(0,0,0,.6); }
+/* nút phụ (khi đã có "Chơi tiếp"): đá xám rêu, chữ màu xương */
+#title #btn-continue:not([hidden]) ~ #btn-new { background: linear-gradient(180deg, #46505A 0%, #2E363F 50%, #1C2229 100%); color: #D8CFBE; text-shadow: 0 2px 0 #0B0F14; }
+#title #btn-continue:not([hidden]) ~ #btn-new::after { display: none; }
+#title .music-toggle { width: auto; min-width: 170px; height: 42px; margin-top: 18px; padding: 0 18px; border-radius: 999px; border: 2px solid #0F141B;
+  background: linear-gradient(180deg, #2E363F, #1C2229); box-shadow: inset 0 2px 0 rgba(255,255,255,.08), 0 4px 0 #0F141B; color: #B9B2A4; font-size: 14px; transform: none; }
+#title .music-toggle:hover:not(:disabled) { transform: none; filter: brightness(1.15); }
+
+/* chọn chế độ: hai thẻ cùng kiểu nút, cao tự co theo chữ, không xê dịch khi rê chuột */
+.mode-pick { width: 340px; gap: 18px; margin-top: 4px; }
+#title .mode-pick button:not(.music-toggle) { height: auto; min-height: 76px; width: 100% !important; padding: 12px 24px 14px; border-radius: 22px;
+  flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; text-align: left; }
+#title .mode-pick button b { font: 800 25px/1.05 "Grenze Gotisch", Georgia, serif; }
+#title .mode-pick button small { font: 500 13px/1.35 system-ui, "Segoe UI", sans-serif; color: rgba(244,233,216,.85); text-shadow: none; letter-spacing: 0; }
+#title .mode-pick button[data-m="detective"] { background: linear-gradient(180deg, #46505A 0%, #2E363F 50%, #1C2229 100%); color: #D8CFBE; }
+#title .mode-pick button[data-m="detective"]::after { display: none; }
+#title .mode-pick button[data-m="detective"] small { color: #A8A296; }
+body.portrait #title button:not(.music-toggle) { width: 380px; height: 76px; font-size: 32px; }
+body.portrait #title .mode-pick { width: 420px; }
+body.portrait #title .mode-pick button:not(.music-toggle) { height: auto; min-height: 92px; }
+body.portrait #title .mode-pick button b { font-size: 30px; }
+body.portrait #title .mode-pick button small { font-size: 15px; }
+body.portrait #title .music-toggle { width: auto; height: 48px; font-size: 16px; }
+
+.mode-pick .mp-title { font: 700 14px/1 system-ui, "Segoe UI", sans-serif; letter-spacing: 3px; text-transform: uppercase; color: #8C949B; text-align: center; margin-bottom: 2px; }
+body.portrait .mode-pick .mp-title { font-size: 16px; }

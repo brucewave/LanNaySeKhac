@@ -14,6 +14,10 @@ var G = window.G || (window.G = {});
       '</defs>';
     // trời, trăng, mây
     s += '<rect width="960" height="300" fill="url(#cvSky)"/>';
+    // màn dọc: nới trời lên trên (y âm) để đặt tên game và nút, phía dưới vẫn đủ trăng, đình, đèn, xe, người
+    s += '<g class="cv-ext"><rect x="0" y="-760" width="960" height="762" fill="#0B1018"/>';
+    for (var j = 0; j < 46; j++) s += '<circle cx="' + (380 + (j * 137) % 560) + '" cy="' + (-720 + (j * 89) % 700) + '" r="' + (j % 4 ? 0.9 : 1.6) + '" fill="#8C949B" opacity="' + (0.25 + (j % 5) / 10) + '"/>';
+    s += '</g>';
     for (var i = 0; i < 40; i++) s += '<circle cx="' + ((i * 197) % 960) + '' + '" cy="' + ((i * 71) % 230) + '" r="' + (i % 3 ? 0.8 : 1.4) + '" fill="#8C949B" opacity="' + (0.3 + (i % 5) / 10) + '"/>';
     s += '<circle cx="820" cy="92" r="120" fill="url(#cvMoon)"/><circle cx="820" cy="92" r="36" fill="#D5DCE0"/><circle cx="808" cy="84" r="7" fill="#B9C2C6"/><circle cx="830" cy="104" r="5" fill="#B9C2C6"/>';
     s += '<path class="cv-cloud" d="M690,120 q20,-18 50,-6 q20,-16 46,0 q30,-4 34,14 q-60,10 -130,-8 z" fill="#2B3138" opacity=".85"/>';
@@ -52,7 +56,7 @@ var G = window.G || (window.G = {});
     for (var e = 0; e < 8; e++) s += '<rect x="' + (300 + e * 70) + '" y="' + (440 + (e % 3) * 20) + '" width="6" height="8" fill="' + (e % 2 ? '#B89A4A' : '#A32E36') + '" class="cv-ember" style="animation-delay:-' + (e * 0.9) + 's"/>';
     // cỏ phía trước, lớp tối bên trái cho chữ
     s += '<path d="M900,540 q6,-40 14,-50 q-2,30 6,50 q8,-44 18,-56 q-6,40 0,56 Z M20,540 q8,-30 16,-40 q-4,24 4,40 Z" fill="#1B222C"/>';
-    s += '<rect width="960" height="540" fill="url(#cvLeft)"/>';
+    s += '<rect class="cv-left" width="960" height="540" fill="url(#cvLeft)"/>';
     return s + '</svg>';
   }
   function mount() {
@@ -61,5 +65,12 @@ var G = window.G || (window.G = {});
     t.insertAdjacentHTML('afterbegin', cover());
   }
   G.cover = mount;
+  // màn dọc: khung ảnh cắt dải giữa (x 430–890) và bám đáy, phần trời nới thêm nằm sau tên game
+  G.coverFit = function () {
+    var c = document.getElementById('cover');
+    if (!c) return;
+    c.setAttribute('viewBox', G.portrait ? '430 -700 460 1240' : '0 0 960 540');
+    c.setAttribute('preserveAspectRatio', G.portrait ? 'xMidYMax slice' : 'xMidYMid slice');
+  };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
 })();

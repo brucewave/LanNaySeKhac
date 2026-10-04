@@ -247,8 +247,7 @@ G.world = { mode: 'walk', camX: 0, camY: 0, ents: {}, near: null, solids: [] };
       var py = Math.min(t.y, t.npc ? t.ny : t.y) - 122;
       W.prompt.style.transform = 'translate3d(' + t.x + 'px,' + py + 'px,0) translateX(-50%)';
     } else W.prompt.hidden = true;
-    $('btn-act').classList.toggle('ready', !!t);
-    $('btn-act').textContent = t ? labelOf(t) : '●';
+    if (G.ui.actBtn) G.ui.actBtn(t, t ? labelOf(t) : '');
 
     if (I.act) { I.act = false; if (t) W.interact(t); }
     edgeHints(L);

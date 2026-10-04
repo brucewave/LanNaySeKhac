@@ -19,7 +19,28 @@ var G = window.G || (window.G = {});
     menu: svg('<path d="M4 7h16M4 12h16M4 17h16"/>'),
     play: svg('<path d="M7 5l12 7-12 7z"/>'),
     plus: svg('<path d="M12 5v14M5 12h14"/>'),
-    close: svg('<path d="M6 6l12 12M18 6L6 18"/>')
+    close: svg('<path d="M6 6l12 12M18 6L6 18"/>'),
+    talk: svg('<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>'),
+    look: svg('<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>'),
+    hand: svg('<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11M11 10V4.5a1.5 1.5 0 0 1 3 0V11M14 10.5V6a1.5 1.5 0 0 1 3 0v8c0 4-2.5 6.5-6 6.5-2.6 0-4-1.2-5.3-3.4L4 14.2a1.4 1.4 0 0 1 2.3-1.6L8 15"/>'),
+    shop: svg('<path d="M4 9l1.5-5h13L20 9M4 9h16v2a3 3 0 0 1-5.3 2 3 3 0 0 1-5.4 0A3 3 0 0 1 4 11zM5 13v7h14v-7M10 20v-4h4v4"/>'),
+    heart: svg('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>'),
+    door: svg('<path d="M6 21V4h10v17M4 21h16M13 12h.01"/>'),
+    tap: svg('<circle cx="12" cy="9" r="3"/><path d="M12 2v1.5M5 9h1.5M17.5 9H19M7 4l1 1M17 4l-1 1M10.5 21l-1.5-6.5 3 1.5 3-1.5-1.5 6.5"/>')
+  };
+
+  // ---------- nút tương tác (điện thoại): biểu tượng theo việc + tên việc; không có gì gần thì thu nhỏ, mờ ----------
+  var ACT_IC = { talk: 'talk', stall_talk: 'talk', look: 'look', ledger: 'look', vy_pages: 'look', teaser: 'look', meme: 'look', mirror: 'look',
+    sell: 'shop', shop: 'coin', rest: 'moon', feed: 'heart', hide: 'door', ferry_back: 'door', mirror_back: 'door', pin_back: 'hand' };
+  var actKey = null;
+  G.ui.actBtn = function (t, label) {
+    var b = $('btn-act'); if (!b) return;
+    var ic = !t ? 'tap' : (t.npc ? 'talk' : (ACT_IC[t.act] || 'hand'));
+    var key = ic + '|' + (label || '');
+    if (key === actKey) return; // chỉ vẽ lại khi đổi
+    actKey = key;
+    b.classList.toggle('ready', !!t);
+    b.innerHTML = '<span class="ab-ic">' + IC[ic] + '</span>' + (t ? '<span class="ab-lbl">' + label + '</span>' : '');
   };
 
   // ---------- thanh trên cùng: gói mỗi thông tin vào một "chip" có biểu tượng ----------
